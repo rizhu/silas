@@ -36,7 +36,17 @@ class Augmented_Matrix:
 
 		return str(self)
 
-	def try_input_for_type(input_str, error_string, type_func = str, error = ValueError):
+	def cmd_check(null, check_str, return_type = str):
+		"""
+		Allows user to execute commands at any point
+
+		null: Catches return of print() statement in input()
+		"""
+		if check_str == "exit()":
+			exit()
+		return check_str
+
+	def try_input_for_type(input_str, error_string, type_func = str):
 		"""
 		Polls for input until input is valid. Returns input.
 
@@ -49,8 +59,8 @@ class Augmented_Matrix:
 		valid, return_value = False, None
 		while not valid:
 			try:
-				return_value = type_func(input(input_str))
-			except error:
+				return_value = type_func(self.cmd_check(input(input_str)))
+			except:
 				print(error_string)
 			else:
 				valid = True
@@ -68,7 +78,7 @@ class Augmented_Matrix:
 			valid = False
 			while not valid:
 				try:
-					rows = int(input("Number of rows: "))
+					rows = int(self.cmd_check(input(f"Number of rows: ")))
 				except ValueError:
 					print(f"Number of rows must be a positive integer.")
 				else:
@@ -81,7 +91,7 @@ class Augmented_Matrix:
 			valid = False
 			while not valid:
 				try:
-					columns = int(input("Number of columns (not including constants): "))
+					columns = int(self.cmd_check(input("Number of columns (not including constants): ")))
 				except ValueError:
 					print(f"Number of columns must be a positive integer.")
 				else:
@@ -97,7 +107,7 @@ class Augmented_Matrix:
 			valid = False
 			while not valid:
 				try:
-					self.constants[i, 0] = float(input(f"Constant in row {i + 1}: "))
+					self.constants[i, 0] = float(self.cmd_check(input(f"Constant in row {i + 1}: ")))
 				except ValueError:
 					print(f"Constant must be a real number.")
 				else:
@@ -110,7 +120,7 @@ class Augmented_Matrix:
 				valid = False
 				while not valid:
 					try:
-						self.coefficients[i, j] = float(input(f"Coefficient in row {i + 1}, column {j + 1}: "))
+						self.coefficients[i, j] = float(self.cmd_check(input(f"Coefficient in row {i + 1}, column {j + 1}: ")))
 					except ValueError:
 						print(f"Coefficient must be a real number.")
 					else:
@@ -130,7 +140,7 @@ class Augmented_Matrix:
 			valid = False
 			while not valid:
 				try:
-					first_row = int(input(f"First row to swap: "))
+					first_row = int(self.cmd_check(input(f"First row to swap: ")))
 				except ValueError:
 					print(f"Row number must be a positive integer.")
 				else:
@@ -143,7 +153,7 @@ class Augmented_Matrix:
 			valid = False
 			while not valid:
 				try:
-					second_row = int(input(f"Row to swap with: "))
+					second_row = int(self.cmd_check(input(f"Row to swap with: ")))
 				except ValueError:
 					print(f"Row number must be a positive integer.")
 				else:
@@ -152,9 +162,38 @@ class Augmented_Matrix:
 					else:
 						print(f"Row number must be a positive integer.")
 
-		self.coefficients[[first_row - 1, second_row - 1]] = self.coefficients[[second_row - 1, first_row - 1]]
-		self.constants[[first_row - 1, second_row - 1]] = self.constants[[second_row - 1, first_row - 1]]
+		try:
+			self.coefficients[[first_row - 1, second_row - 1]] = self.coefficients[[second_row - 1, first_row - 1]]
+			self.constants[[first_row - 1, second_row - 1]] = self.constants[[second_row - 1, first_row - 1]]
+		except IndexError:
+			print(f"At least one of the inputted rows does not exist. Swap not executed.")
 
 		print(self)
+
+	def mult_row_by_constant(self, row, constant):
+		"""
+		Multiplies row by constant and returns row number
+
+		row:      Row number to multiply
+		constant: Constant to multiply row by
+		"""
+		
+		self.coefficients[row - 1] = self.coefficients[row - 1] * constant
+		self.constants[row - 1] = self.constants[row - 1] * constant
+		return row
+
+	def add_rows(self, first_row, second_row, store_row):
+		"""
+		Adds two rows and stores result in specified row
+
+		first_row:  First row to add
+		second_row: Second row to add
+		store_row:  Row to store sum in
+		"""
+
+		self.coefficients[store_row - 1] = self.coefficients[first_row - 1] + self.coefficients[second_row - 1]
+		self.constants[store_row - 1] = self.constants[first_row - 1] + self.constants[second_row - 1]
+
+
 
 
