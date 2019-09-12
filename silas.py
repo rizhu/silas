@@ -21,7 +21,7 @@ def mult_row(row, constant):
 	Calls mult_row_by_constant from augmented_matrix
 	"""
 
-	a.mult_row_by_constant(row, constant)
+	return a.mult_row(row, constant)
 
 def add_rows(first_row, second_row, store_row):
 	"""

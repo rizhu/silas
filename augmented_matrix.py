@@ -36,17 +36,17 @@ class Augmented_Matrix:
 
 		return str(self)
 
-	def cmd_check(null, check_str, return_type = str):
+	def cmd_check(null, check_input, return_type = str):
 		"""
 		Allows user to execute commands at any point
 
 		null: Catches return of print() statement in input()
 		"""
-		if check_str == "exit()":
+		if check_input == "exit()":
 			exit()
-		return check_str
+		return check_input
 
-	def try_input_for_type(input_str, error_string, type_func = str):
+	def try_input_for_type(self, input_str, error_string, type_func = str, cond = lambda x : True, error = ValueError):
 		"""
 		Polls for input until input is valid. Returns input.
 
@@ -60,10 +60,13 @@ class Augmented_Matrix:
 		while not valid:
 			try:
 				return_value = type_func(self.cmd_check(input(input_str)))
-			except:
+			except error:
 				print(error_string)
 			else:
-				valid = True
+				if cond(return_value):
+					valid = True
+				else:
+					print(error_string)
 		return return_value
 
 	def build(self, rows = -1, columns = -1):
@@ -75,57 +78,24 @@ class Augmented_Matrix:
 		"""
 
 		if rows == -1:
-			valid = False
-			while not valid:
-				try:
-					rows = int(self.cmd_check(input(f"Number of rows: ")))
-				except ValueError:
-					print(f"Number of rows must be a positive integer.")
-				else:
-					if rows > 0:
-						valid = True
-					else:
-						print(f"Number of rows must be a positive integer.")
+			rows = self.try_input_for_type(f"Number of rows: ", f"Number of rows must be a positive integer.", int, lambda x : x > 0)
 
 		if columns == -1:
-			valid = False
-			while not valid:
-				try:
-					columns = int(self.cmd_check(input("Number of columns (not including constants): ")))
-				except ValueError:
-					print(f"Number of columns must be a positive integer.")
-				else:
-					if columns > 0:
-						valid = True
-					else:
-						print(f"Number of columns must be a positive integer.")
+			columns = self.try_input_for_type(f"Number of columns (not including constants): ", f"Number of columns must be a positive integer.", int, lambda x : x > 0)
 
 		self.constants, self.coefficients = np.zeros((rows, 1)), np.zeros((rows, columns))
 
 		print(f"\nFirst, let's assign the constants (y-values, measured values, or the values in the vector to the right of the bar)")
 		for i in range(rows):
-			valid = False
-			while not valid:
-				try:
-					self.constants[i, 0] = float(self.cmd_check(input(f"Constant in row {i + 1}: ")))
-				except ValueError:
-					print(f"Constant must be a real number.")
-				else:
-					print(self.constants)
-					valid = True
+			self.constants[i, 0] = self.try_input_for_type(f"Constant in row {i + 1}: ", f"Constant must be a real number.", float)
+			print(self.constants)
 
 		print(f"\nNow, let's assign the coefficients (x-values, unknown values, or the values in the matrix to the left of the bar)")
 		for i in range(rows):
 			for j in range(columns):
-				valid = False
-				while not valid:
-					try:
-						self.coefficients[i, j] = float(self.cmd_check(input(f"Coefficient in row {i + 1}, column {j + 1}: ")))
-					except ValueError:
-						print(f"Coefficient must be a real number.")
-					else:
-						print(self.coefficients)
-						valid = True
+				self.coefficients[i, j] = self.try_input_for_type(f"Coefficient in row {i + 1}, column {j + 1}: ", f"Coefficient must be a real number.", float)
+				print(self.coefficients)
+
 		print(f"\n{self}")
  
 	def swap_rows(self, first_row = -1, second_row = -1):
@@ -137,30 +107,10 @@ class Augmented_Matrix:
 		"""
 
 		if first_row == -1:
-			valid = False
-			while not valid:
-				try:
-					first_row = int(self.cmd_check(input(f"First row to swap: ")))
-				except ValueError:
-					print(f"Row number must be a positive integer.")
-				else:
-					if first_row > 0:
-						valid = True
-					else:
-						print(f"Row number must be a positive integer.")
+			first_row = self.try_input_for_type(f"First row to swap: ", f"Row number must be a positive integer.", int)
 
 		if second_row == -1:
-			valid = False
-			while not valid:
-				try:
-					second_row = int(self.cmd_check(input(f"Row to swap with: ")))
-				except ValueError:
-					print(f"Row number must be a positive integer.")
-				else:
-					if second_row > 0:
-						valid = True
-					else:
-						print(f"Row number must be a positive integer.")
+			second_row = self.try_input_for_type(f"Row to swap with: ", f"Row number must be a positive integer.", int)
 
 		try:
 			self.coefficients[[first_row - 1, second_row - 1]] = self.coefficients[[second_row - 1, first_row - 1]]
@@ -170,7 +120,7 @@ class Augmented_Matrix:
 
 		print(self)
 
-	def mult_row_by_constant(self, row, constant):
+	def mult_row(self, row, constant):
 		"""
 		Multiplies row by constant and returns row number
 
