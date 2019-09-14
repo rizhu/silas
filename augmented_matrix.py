@@ -1,3 +1,4 @@
+import math
 import numpy as np
 import sys
 
@@ -18,14 +19,22 @@ class Augmented_Matrix:
 		Overrides __str__ function to print the augmented matrix using print()
 		"""
 		
+		round_to_n = lambda x, n: round(x, -int(math.floor(math.log10(abs(x)))) + (n - 1)) # Rounds to n significant figures
+
 		str_matrix = ""
 		for i in range(self.coefficients.shape[0]):
 			str_matrix += f"[ "
 			for j in range(self.coefficients.shape[1] + 1):
 				if j < self.coefficients.shape[1]:
-					str_matrix += f"{str(self.coefficients[i, j])} "
+					if self.coefficients[i, j] == -0.0:
+						str_matrix += f"{str(0.0)} "
+					else:
+						str_matrix += f"{str(round_to_n(self.coefficients[i, j], 5))} "
 				else:
-					str_matrix += f"| {self.constants[i, 0]} "
+					if self.constants[i, 0] == -0.0:
+						str_matrix += f"| {0.0} "
+					else:
+						str_matrix += f"| {round_to_n(self.constants[i, 0], 5)} "
 			str_matrix += f"]\n"
 		return str_matrix
 
@@ -117,6 +126,7 @@ class Augmented_Matrix:
 			return [self.coefficients[row - 1], self.constants[row - 1]]
 		else:
  			return [self.coefficients[row], self.constants[row]]
+ 
 	def swap_rows(self, first_row = -1, second_row = -1, human_row_nums = False):
 		"""
 		Swaps rows of augmented matrix through a series of user queries
@@ -188,7 +198,7 @@ class Augmented_Matrix:
 		"""
 
 		pivot_row = 0
-		for current_column in range(self.coefficients.shape[1] - 1):
+		for current_column in range(min(self.coefficients.shape[0], self.coefficients.shape[1])):	# Iterates only over square matrix
 
 			# Checks if pivot row leads with 0 and swaps with a leading non-zero row if the pivot row leads with a zero
 			if self.coefficients[pivot_row, current_column] == 0:
@@ -217,11 +227,7 @@ class Augmented_Matrix:
 						self.add_rows(self.mult_row(pivot_row, np.absolute(self.coefficients[current_row, current_column])), self.mult_row(current_row, np.absolute(self.coefficients[pivot_row, current_column])), current_row)
 					print(self)
 
-			if pivot_row < self.coefficients.shape[0] - 2:
-				pivot_row += 1
-			else:
-				while current_column < self.coefficients.shape[1]:	# Break out of the for loop is the bottom row is reached
-					current_column += 100
+			pivot_row += 1
 		
 		print("Result of Gaussian eliminiation:")
 		print(self)
