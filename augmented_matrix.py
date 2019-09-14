@@ -69,12 +69,13 @@ class Augmented_Matrix:
 					print(error_string)
 		return return_value
 
-	def build(self, rows = -1, columns = -1):
+	def build(self, rows = -1, columns = -1, human_row_nums = False):
 		"""
 		Builds the augmented matrix through a series of user queries
 
-		rows:	 Number of rows in coefficient matrix
-		columns: Number of columns in coefficient matrix
+		rows:	       Number of rows in coefficient matrix
+		columns:       Number of columns in coefficient matrix
+		human_row_nums: If True, row numbers are processed starting as 1. Otherwise, they are processed as starting at 0.
 		"""
 
 		if rows == -1:
@@ -87,24 +88,46 @@ class Augmented_Matrix:
 
 		print(f"\nFirst, let's assign the constants (y-values, measured values, or the values in the vector to the right of the bar)")
 		for i in range(rows):
-			self.constants[i, 0] = self.try_input_for_type(f"Constant in row {i + 1}: ", f"Constant must be a real number.", float)
+			if human_row_nums:
+				self.constants[i, 0] = self.try_input_for_type(f"Constant in row {i + 1}: ", f"Constant must be a real number.", float)
+			else:
+				self.constants[i, 0] = self.try_input_for_type(f"Constant in row {i}: ", f"Constant must be a real number.", float)
 			print(self.constants)
 
 		print(f"\nNow, let's assign the coefficients (x-values, unknown values, or the values in the matrix to the left of the bar)")
 		for i in range(rows):
 			for j in range(columns):
-				self.coefficients[i, j] = self.try_input_for_type(f"Coefficient in row {i + 1}, column {j + 1}: ", f"Coefficient must be a real number.", float)
+				if human_row_nums:
+					self.coefficients[i, j] = self.try_input_for_type(f"Coefficient in row {i + 1}, column {j + 1}: ", f"Coefficient must be a real number.", float)
+				else:
+					self.coefficients[i, j] = self.try_input_for_type(f"Coefficient in row {i}, column {j}: ", f"Coefficient must be a real number.", float)
 				print(self.coefficients)
 
 		print(f"\n{self}")
- 
-	def swap_rows(self, first_row = -1, second_row = -1):
+
+	def get_row(self, row, human_row_nums = False):
+		"""
+		Returns specified row number as list
+
+		row:            Row number to return
+		human_row_nums: If True, row numbers are processed starting as 1. Otherwise, they are processed as starting at 0.
+		"""
+
+		if human_row_nums:
+			return [self.coefficients[row - 1], self.constants[row - 1]]
+		else:
+ 			return [self.coefficients[row], self.constants[row]]
+	def swap_rows(self, first_row = -1, second_row = -1, human_row_nums = False):
 		"""
 		Swaps rows of augmented matrix through a series of user queries
 
-		first_row:	Row to swap.
-		second_row: Row to swap first_row with.
+		first_row:	    Row to swap.
+		second_row:     Row to swap first_row with.
+		human_row_nums: If True, row numbers are processed starting as 1. Otherwise, they are processed as starting at 0.
 		"""
+
+		if first_row == second_row:
+			return
 
 		if first_row == -1:
 			first_row = self.try_input_for_type(f"First row to swap: ", f"Row number must be a positive integer.", int)
@@ -113,36 +136,100 @@ class Augmented_Matrix:
 			second_row = self.try_input_for_type(f"Row to swap with: ", f"Row number must be a positive integer.", int)
 
 		try:
-			self.coefficients[[first_row - 1, second_row - 1]] = self.coefficients[[second_row - 1, first_row - 1]]
-			self.constants[[first_row - 1, second_row - 1]] = self.constants[[second_row - 1, first_row - 1]]
+			if human_row_nums:
+				self.coefficients[[first_row - 1, second_row - 1]] = self.coefficients[[second_row - 1, first_row - 1]]
+				self.constants[[first_row - 1, second_row - 1]] = self.constants[[second_row - 1, first_row - 1]]
+			else:
+				self.coefficients[[first_row, second_row]] = self.coefficients[[second_row, first_row]]
+				self.constants[[first_row, second_row]] = self.constants[[second_row, first_row]]
 		except IndexError:
 			print(f"At least one of the inputted rows does not exist. Swap not executed.")
 
-		print(self)
-
-	def mult_row(self, row, constant):
+	def mult_row(self, row, constant, store = False, human_row_nums = False):
 		"""
-		Multiplies row by constant and returns row number
+		Multiplies row by constant and either stores new row or returns the new row without changing it
 
-		row:      Row number to multiply
-		constant: Constant to multiply row by
+		row:            Row number to multiply
+		constant:       Constant to multiply row by
+		store:          If True, stores multiplied row. Otherwise, returns the row.
+		human_row_nums: If True, row numbers are processed starting as 1. Otherwise, they are processed as starting at 0.
 		"""
-		
-		self.coefficients[row - 1] = self.coefficients[row - 1] * constant
-		self.constants[row - 1] = self.constants[row - 1] * constant
-		return row
 
-	def add_rows(self, first_row, second_row, store_row):
+		if store:
+			if human_row_nums:
+				self.coefficients[row - 1] = self.coefficients[row - 1] * constant
+				self.constants[row - 1] = self.constants[row - 1] * constant
+			else:
+				self.coefficients[row] = self.coefficients[row] * constant
+				self.constants[row] = self.constants[row] * constant
+		else:
+			return [self.coefficients[row] * constant, self.constants[row] * constant]
+
+	def add_rows(self, first_row, second_row, store_row, human_row_nums = False):
 		"""
 		Adds two rows and stores result in specified row
 
-		first_row:  First row to add
-		second_row: Second row to add
-		store_row:  Row to store sum in
+		first_row:      First row to add
+		second_row:     Second row to add
+		store_row:      Row to store sum in
+		human_row_nums: If True, row numbers are processed starting as 1. Otherwise, they are processed as starting at 0.
 		"""
 
-		self.coefficients[store_row - 1] = self.coefficients[first_row - 1] + self.coefficients[second_row - 1]
-		self.constants[store_row - 1] = self.constants[first_row - 1] + self.constants[second_row - 1]
+		if human_row_nums:
+			self.coefficients[store_row - 1] = np.add(first_row[0], second_row[0])
+			self.constants[store_row - 1] = np.add(first_row[1], second_row[1])
+		else:
+			self.coefficients[store_row] = np.add(first_row[0], second_row[0])
+			self.constants[store_row] = np.add(first_row[1], second_row[1])
+
+	def elim_gaussian(self):
+		"""
+		Row-reduces augmented matrix with Gaussian elimination
+		"""
+
+		pivot_row = 0
+		for current_column in range(self.coefficients.shape[1] - 1):
+
+			# Checks if pivot row leads with 0 and swaps with a leading non-zero row if the pivot row leads with a zero
+			if self.coefficients[pivot_row, current_column] == 0:
+				leading_nonzero_row = pivot_row + 1
+				while leading_nonzero_row < (self.coefficients.shape[0] - 1) and self.coefficients[leading_nonzero_row, current_column] == 0:	#Increments leading_nonzero_row until a non-zero value in the column is found
+					leading_nonzero_row += 1
+				if not self.coefficients[leading_nonzero_row, current_column] == 0:		#Swaps rows only if the entire column isn't just zeros
+					print(f"R_{pivot_row + 1} <-> R_{leading_nonzero_row + 1}")
+					self.swap_rows(pivot_row, leading_nonzero_row)
+					print(self)
+
+			# Divides pivot_row so that the pivot element is 1
+			if not self.coefficients[pivot_row, current_column] == 1 and not self.coefficients[pivot_row, current_column] == 0:
+				print(f"R_{pivot_row + 1} / {self.coefficients[pivot_row, current_column]} -> R_{pivot_row + 1}")
+				self.mult_row(pivot_row, 1 / self.coefficients[pivot_row, current_column], True)
+				print(self)
+
+			# Executes row operations to achieve upper triangular form
+			for current_row in range(pivot_row + 1, self.coefficients.shape[0]):
+				if not self.coefficients[current_row, current_column] == 0:
+					if np.sign(self.coefficients[pivot_row, current_column]) == np.sign(self.coefficients[current_row, current_column]):	# If the signs of the pivot element and the leading coefficient of subsequent rows are the same, subtract multiples of them
+						print(f"{np.absolute(self.coefficients[current_row, current_column])}R_{pivot_row + 1} - {np.absolute(self.coefficients[pivot_row, current_column])}R_{current_row + 1} -> R_{current_row + 1}")
+						self.add_rows(self.mult_row(pivot_row, self.coefficients[current_row, current_column]), self.mult_row(current_row, self.coefficients[pivot_row, current_column] * -1), current_row)
+					else:	# Otherwise, add multiples of them
+						print(f"{np.absolute(self.coefficients[current_row, current_column])}R_{pivot_row + 1} + {np.absolute(self.coefficients[pivot_row, current_column])}R_{current_row + 1} -> R_{current_row + 1}")
+						self.add_rows(self.mult_row(pivot_row, np.absolute(self.coefficients[current_row, current_column])), self.mult_row(current_row, np.absolute(self.coefficients[pivot_row, current_column])), current_row)
+					print(self)
+
+			if pivot_row < self.coefficients.shape[0] - 2:
+				pivot_row += 1
+			else:
+				while current_column < self.coefficients.shape[1]:	# Break out of the for loop is the bottom row is reached
+					current_column += 100
+		
+		print("Result of Gaussian eliminiation:")
+		print(self)
+
+
+
+
+
 
 
 

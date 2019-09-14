@@ -9,6 +9,13 @@ def build(rows = -1, columns = -1):
 
 	a.build(rows, columns)
 
+def get_row(row):
+	"""
+	Calls get_row from augmented_matrix
+	"""
+
+	return a.get_row(row)
+
 def swap_rows(first_row = -1, second_row = -1):
 	"""
 	Calls swap_rows from augmented_matrix
@@ -16,12 +23,12 @@ def swap_rows(first_row = -1, second_row = -1):
 	
 	a.swap_rows(first_row, second_row)
 
-def mult_row(row, constant):
+def mult_row(row, constant, store = True):
 	"""
-	Calls mult_row_by_constant from augmented_matrix
+	Calls mult_row from augmented_matrix
 	"""
 
-	return a.mult_row(row, constant)
+	return a.mult_row(row, constant, store = store)
 
 def add_rows(first_row, second_row, store_row):
 	"""
@@ -29,3 +36,4 @@ def add_rows(first_row, second_row, store_row):
 	"""
 
 	a.add_rows(first_row, second_row, store_row)
+
