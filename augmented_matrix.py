@@ -14,12 +14,16 @@ class Augmented_Matrix:
 
 	coefficients, constants = np.array([]), np.array([])
 
+	def round_to_n(self, x, n):
+		"""
+		Rounds float x to n significant figures
+		"""
+		return round(x, -int(math.floor(math.log10(abs(x)))) + (n - 1))
+
 	def __str__(self):
 		""" 
 		Overrides __str__ function to print the augmented matrix using print()
 		"""
-		
-		round_to_n = lambda x, n: round(x, -int(math.floor(math.log10(abs(x)))) + (n - 1)) # Rounds to n significant figures
 
 		str_matrix = ""
 		for i in range(self.coefficients.shape[0]):
@@ -29,12 +33,12 @@ class Augmented_Matrix:
 					if self.coefficients[i, j] == -0.0:
 						str_matrix += f"{str(0.0)} "
 					else:
-						str_matrix += f"{str(round_to_n(self.coefficients[i, j], 5))} "
+						str_matrix += f"{str(self.round_to_n(self.coefficients[i, j], 5))} "
 				else:
 					if self.constants[i, 0] == -0.0:
 						str_matrix += f"| {0.0} "
 					else:
-						str_matrix += f"| {round_to_n(self.constants[i, 0], 5)} "
+						str_matrix += f"| {self.round_to_n(self.constants[i, 0], 5)} "
 			str_matrix += f"]\n"
 		return str_matrix
 
@@ -212,7 +216,7 @@ class Augmented_Matrix:
 
 			# Divides pivot_row so that the pivot element is 1
 			if not self.coefficients[pivot_row, current_column] == 1 and not self.coefficients[pivot_row, current_column] == 0:
-				print(f"R_{pivot_row + 1} / {self.coefficients[pivot_row, current_column]} -> R_{pivot_row + 1}")
+				print(f"R_{pivot_row + 1} / {self.round_to_n(self.coefficients[pivot_row, current_column], 5)} -> R_{pivot_row + 1}")
 				self.mult_row(pivot_row, 1 / self.coefficients[pivot_row, current_column], True)
 				print(self)
 
@@ -220,10 +224,10 @@ class Augmented_Matrix:
 			for current_row in range(pivot_row + 1, self.coefficients.shape[0]):
 				if not self.coefficients[current_row, current_column] == 0:
 					if np.sign(self.coefficients[pivot_row, current_column]) == np.sign(self.coefficients[current_row, current_column]):	# If the signs of the pivot element and the leading coefficient of subsequent rows are the same, subtract multiples of them
-						print(f"{np.absolute(self.coefficients[current_row, current_column])}R_{pivot_row + 1} - {np.absolute(self.coefficients[pivot_row, current_column])}R_{current_row + 1} -> R_{current_row + 1}")
+						print(f"{self.round_to_n(np.absolute(self.coefficients[current_row, current_column]), 5)}R_{pivot_row + 1} - {self.round_to_n(np.absolute(self.coefficients[pivot_row, current_column]), 5)}R_{current_row + 1} -> R_{current_row + 1}")
 						self.add_rows(self.mult_row(pivot_row, self.coefficients[current_row, current_column]), self.mult_row(current_row, self.coefficients[pivot_row, current_column] * -1), current_row)
 					else:	# Otherwise, add multiples of them
-						print(f"{np.absolute(self.coefficients[current_row, current_column])}R_{pivot_row + 1} + {np.absolute(self.coefficients[pivot_row, current_column])}R_{current_row + 1} -> R_{current_row + 1}")
+						print(f"{self.round_to_n(np.absolute(self.coefficients[current_row, current_column]), 5)}R_{pivot_row + 1} + {self.round_to_n(np.absolute(self.coefficients[pivot_row, current_column]), 5)}R_{current_row + 1} -> R_{current_row + 1}")
 						self.add_rows(self.mult_row(pivot_row, np.absolute(self.coefficients[current_row, current_column])), self.mult_row(current_row, np.absolute(self.coefficients[pivot_row, current_column])), current_row)
 					print(self)
 
