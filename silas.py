@@ -1,6 +1,6 @@
 import augmented_matrix as am
 
-a = am.Augmented_Matrix()
+a = am.AugmentedMatrix()
 
 def build(rows = -1, columns = -1):
 	"""

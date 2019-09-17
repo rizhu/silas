@@ -2,7 +2,7 @@ import math
 import numpy as np
 import sys
 
-class Augmented_Matrix:
+class AugmentedMatrix:
 	"""
 	Class containing all functions and values involved in setup and manipulation of the augmented matrix
 
@@ -209,7 +209,7 @@ class Augmented_Matrix:
 				leading_nonzero_row = pivot_row + 1
 				while leading_nonzero_row < (self.coefficients.shape[0] - 1) and self.coefficients[leading_nonzero_row, current_column] == 0:	#Increments leading_nonzero_row until a non-zero value in the column is found
 					leading_nonzero_row += 1
-				if not self.coefficients[leading_nonzero_row, current_column] == 0:		#Swaps rows only if the entire column isn't just zeros
+				if leading_nonzero_row < self.coefficients.shape[0] and not self.coefficients[leading_nonzero_row, current_column] == 0:		#Swaps rows only if the entire column isn't just zeros
 					print(f"R_{pivot_row + 1} <-> R_{leading_nonzero_row + 1}")
 					self.swap_rows(pivot_row, leading_nonzero_row)
 					print(self)
