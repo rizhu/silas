@@ -234,6 +234,12 @@ class AugmentedMatrix:
 		print("Result of Gaussian eliminiation:")
 		print(self)
 
+	def elim_gauss_jordan(self):
+		"""
+		Row-reduces augmented matrix with Guass-Jordan elimination
+		"""
+		pass
+
 
 
 
