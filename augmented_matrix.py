@@ -76,7 +76,11 @@ class AugmentedMatrix:
 			cf_columns = hp.try_input_for_type(f"Number of columns in the coefficient matrix: ", f"Number of columns must be a positive integer.", int, lambda x : x > 0)
 
 		if const_columns == -1:
+<<<<<<< HEAD
 			const_columns = hp.try_input_for_type(f"Number of columns in the constant matrix: ", f"Number of columns must be a positive integer.", int, lambda x : x > 0)
+=======
+			const_columns = self.try_input_for_type(f"Number of columns in the constant matrix (set to 1 if solving a system of linear equations: ", f"Number of columns must be a positive integer.", int, lambda x : x > 0)
+>>>>>>> Minor changes to prompts
 
 		self.constants, self.coefficients = np.zeros((rows, const_columns)), np.zeros((rows, cf_columns))
 
