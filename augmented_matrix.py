@@ -28,17 +28,17 @@ class AugmentedMatrix:
 		str_matrix = ""
 		for i in range(self.coefficients.shape[0]):
 			str_matrix += f"[ "
-			for j in range(self.coefficients.shape[1] + 1):
-				if j < self.coefficients.shape[1]:
-					if self.coefficients[i, j] == -0.0:
-						str_matrix += f"{str(0.0)} "
-					else:
-						str_matrix += f"{str(self.round_to_n(self.coefficients[i, j], 5))} "
+			for j in range(self.coefficients.shape[1]):
+				if self.coefficients[i, j] == -0.0:
+					str_matrix += f"{str(0.0)} "
 				else:
-					if self.constants[i, 0] == -0.0:
-						str_matrix += f"| {0.0} "
-					else:
-						str_matrix += f"| {self.round_to_n(self.constants[i, 0], 5)} "
+					str_matrix += f"{str(self.round_to_n(self.coefficients[i, j], 5))} "
+			str_matrix += f"| "
+			for k in range(self.constants.shape[1]):
+				if self.constants[i, k] == -0.0:
+					str_matrix += f"| {0.0} "
+				else:
+					str_matrix += f"{self.round_to_n(self.constants[i, k], 5)} "
 			str_matrix += f"]\n"
 		return str_matrix
 
@@ -82,34 +82,39 @@ class AugmentedMatrix:
 					print(error_string)
 		return return_value
 
-	def build(self, rows = -1, columns = -1, human_row_nums = False):
+	def build(self, rows = -1, cf_columns = -1, const_columns = -1, human_row_nums = False):
 		"""
 		Builds the augmented matrix through a series of user queries
 
-		rows:	       Number of rows in coefficient matrix
-		columns:       Number of columns in coefficient matrix
+		rows:	        Number of rows in coefficient matrix
+		cf_columns:     Number of columns in coefficient matrix
+		const_columns:  Number of columns in constant matrix
 		human_row_nums: If True, row numbers are processed starting as 1. Otherwise, they are processed as starting at 0.
 		"""
 
 		if rows == -1:
 			rows = self.try_input_for_type(f"Number of rows: ", f"Number of rows must be a positive integer.", int, lambda x : x > 0)
 
-		if columns == -1:
-			columns = self.try_input_for_type(f"Number of columns (not including constants): ", f"Number of columns must be a positive integer.", int, lambda x : x > 0)
+		if cf_columns == -1:
+			cf_columns = self.try_input_for_type(f"Number of columns in the coefficient matrix: ", f"Number of columns must be a positive integer.", int, lambda x : x > 0)
 
-		self.constants, self.coefficients = np.zeros((rows, 1)), np.zeros((rows, columns))
+		if const_columns == -1:
+			const_columns = self.try_input_for_type(f"Number of columns in the constant matrix: ", f"Number of columns must be a positive integer.", int, lambda x : x > 0)
 
-		print(f"\nFirst, let's assign the constants (y-values, measured values, or the values in the vector to the right of the bar)")
+		self.constants, self.coefficients = np.zeros((rows, const_columns)), np.zeros((rows, cf_columns))
+
+		print(f"\nFirst, let's assign the constants (y-values, measured values, or the values in the matrix to the right of the bar)")
 		for i in range(rows):
-			if human_row_nums:
-				self.constants[i, 0] = self.try_input_for_type(f"Constant in row {i + 1}: ", f"Constant must be a real number.", float)
-			else:
-				self.constants[i, 0] = self.try_input_for_type(f"Constant in row {i}: ", f"Constant must be a real number.", float)
-			print(self.constants)
+			for j in range(const_columns):
+				if human_row_nums:
+					self.constants[i, j] = self.try_input_for_type(f"Constant in row {i + 1}, column {j + 1}: ", f"Constant must be a real number.", float)
+				else:
+					self.constants[i, j] = self.try_input_for_type(f"Constant in row {i}, column {j}: ", f"Constant must be a real number.", float)
+				print(self.constants)
 
 		print(f"\nNow, let's assign the coefficients (x-values, unknown values, or the values in the matrix to the left of the bar)")
 		for i in range(rows):
-			for j in range(columns):
+			for j in range(cf_columns):
 				if human_row_nums:
 					self.coefficients[i, j] = self.try_input_for_type(f"Coefficient in row {i + 1}, column {j + 1}: ", f"Coefficient must be a real number.", float)
 				else:

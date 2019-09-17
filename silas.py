@@ -5,12 +5,12 @@ a = am.AugmentedMatrix()
 print(f"\n\nSilas is developed by Imran Khaliq, Noor Mahini, and Richard Hu and is licensed under the GNU General Public Licence.\n\n\n")
 print(f"Welcome to Silas, the Somewhat Interactive Linear Algebra Software!\nSilas is currently capable of storing and manipulating 8 matrices.")
 
-def build(rows = -1, columns = -1):
+def build(rows = -1, cf_columns = -1, const_columns = -1):
 	"""
 	Calls build function from augmented_matrix
 	"""
 
-	a.build(rows, columns)
+	a.build(rows, cf_columns, const_columns)
 
 def get_row(row, human_row_nums = False):
 	"""
