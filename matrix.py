@@ -11,18 +11,37 @@ class Matrix:
 
 	matrix = np.array([])
 
-	def round_to_n(self, x, n):
-		"""
-		Rounds float x to n significant figures
-		"""
-		return round(x, -int(math.floor(math.log10(abs(x)))) + (n - 1))
-
 	def __str__(self):
 		"""
 		"""
 		pass
 
 	def __repr__(self):
+		"""
+		"""
+		pass
+
+	def build(self, rows = -1, cf_columns = -1, const_columns = -1, human_row_nums = False):
+		"""
+		"""
+		pass	
+
+	def get_row(self, row, human_row_nums = False):
+		"""
+		"""
+		pass
+
+	def swap_rows(self, first_row = -1, second_row = -1, human_row_nums = False):
+		"""
+		"""
+		pass
+
+	def mult_row(self, row, constant, store = False, human_row_nums = False):
+		"""
+		"""
+		pass
+
+	def add_rows(self, first_row, second_row, store_row, human_row_nums = False):
 		"""
 		"""
 		pass
