@@ -36,7 +36,7 @@ class AugmentedMatrix:
 			str_matrix += f"| "
 			for k in range(self.constants.shape[1]):
 				if self.constants[i, k] == -0.0:
-					str_matrix += f"| {0.0} "
+					str_matrix += f"{0.0} "
 				else:
 					str_matrix += f"{self.round_to_n(self.constants[i, k], 5)} "
 			str_matrix += f"]\n"
