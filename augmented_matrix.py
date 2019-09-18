@@ -22,7 +22,7 @@ class AugmentedMatrix:
 
 	def __str__(self):
 		""" 
-		Overrides __str__ function to print the augmented matrix using print()
+		Overrides __str__ function
 		"""
 
 		str_matrix = ""
@@ -44,7 +44,7 @@ class AugmentedMatrix:
 
 	def __repr__(self):
 		"""
-		Overrides __repr__ function to print the augmented matrix by calling the object
+		Overrides __repr__ function
 		"""
 
 		return str(self)
