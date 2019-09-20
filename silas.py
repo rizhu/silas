@@ -50,3 +50,10 @@ def elim_gaussian():
 
 	a.elim_gaussian()
 
+def elim_gauss_jordan():
+	"""
+	Calss elim_gauss_jordan from augmented_matrix
+	"""
+
+	a.elim_gauss_jordan()
+
