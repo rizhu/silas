@@ -18,7 +18,8 @@ class AugmentedMatrix:
 		"""
 		Rounds float x to n significant figures
 		"""
-		return round(x, -int(math.floor(math.log10(abs(x)))) + (n - 1))
+		if not x == 0:
+			return round(x, -int(math.floor(math.log10(abs(x)))) + (n - 1))
 
 	def __str__(self):
 		""" 
