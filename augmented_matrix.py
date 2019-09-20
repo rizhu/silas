@@ -1,4 +1,4 @@
-import math
+import helper as hp
 import numpy as np
 import sys
 
@@ -14,15 +14,6 @@ class AugmentedMatrix:
 
 	coefficients, constants = np.array([]), np.array([])
 
-	def round_to_n(self, x, n):
-		"""
-		Rounds float x to n significant figures
-		"""
-		if not x == 0:
-			return round(x, -int(math.floor(math.log10(abs(x)))) + (n - 1))
-		else:
-			return x
-
 	def __str__(self):
 		""" 
 		Overrides __str__ function
@@ -35,13 +26,13 @@ class AugmentedMatrix:
 				if self.coefficients[i, j] == -0.0:
 					str_matrix += f"{str(0.0)} "
 				else:
-					str_matrix += f"{str(self.round_to_n(self.coefficients[i, j], 5))} "
+					str_matrix += f"{str(hp.round_to_n(self.coefficients[i, j], 5))} "
 			str_matrix += f"| "
 			for k in range(self.constants.shape[1]):
 				if self.constants[i, k] == -0.0:
 					str_matrix += f"{0.0} "
 				else:
-					str_matrix += f"{self.round_to_n(self.constants[i, k], 5)} "
+					str_matrix += f"{hp.round_to_n(self.constants[i, k], 5)} "
 			str_matrix += f"]\n"
 		return str_matrix
 
@@ -51,39 +42,6 @@ class AugmentedMatrix:
 		"""
 
 		return str(self)
-
-	def cmd_check(null, check_input, return_type = str):
-		"""
-		Allows user to execute commands at any point
-
-		null: Catches return of print() statement in input()
-		"""
-		if check_input == "exit()":
-			exit()
-		return check_input
-
-	def try_input_for_type(self, input_str, error_string, type_func = str, cond = lambda x : True, error = ValueError):
-		"""
-		Polls for input until input is valid. Returns input.
-
-		input_str:    String printed when polling for input
-		error_string: String printed if error is caught
-		type_func:    Function converting input to desired type
-		error:		  Error to catch
-		"""
-
-		valid, return_value = False, None
-		while not valid:
-			try:
-				return_value = type_func(self.cmd_check(input(input_str)))
-			except error:
-				print(error_string)
-			else:
-				if cond(return_value):
-					valid = True
-				else:
-					print(error_string)
-		return return_value
 
 	def build(self, rows = -1, cf_columns = -1, const_columns = -1, human_row_nums = False):
 		"""
@@ -96,13 +54,13 @@ class AugmentedMatrix:
 		"""
 
 		if rows == -1:
-			rows = self.try_input_for_type(f"Number of rows: ", f"Number of rows must be a positive integer.", int, lambda x : x > 0)
+			rows = hp.try_input_for_type(f"Number of rows: ", f"Number of rows must be a positive integer.", int, lambda x : x > 0)
 
 		if cf_columns == -1:
-			cf_columns = self.try_input_for_type(f"Number of columns in the coefficient matrix: ", f"Number of columns must be a positive integer.", int, lambda x : x > 0)
+			cf_columns = hp.try_input_for_type(f"Number of columns in the coefficient matrix: ", f"Number of columns must be a positive integer.", int, lambda x : x > 0)
 
 		if const_columns == -1:
-			const_columns = self.try_input_for_type(f"Number of columns in the constant matrix: ", f"Number of columns must be a positive integer.", int, lambda x : x > 0)
+			const_columns = hp.try_input_for_type(f"Number of columns in the constant matrix: ", f"Number of columns must be a positive integer.", int, lambda x : x > 0)
 
 		self.constants, self.coefficients = np.zeros((rows, const_columns)), np.zeros((rows, cf_columns))
 
@@ -110,18 +68,18 @@ class AugmentedMatrix:
 		for i in range(rows):
 			for j in range(const_columns):
 				if human_row_nums:
-					self.constants[i, j] = self.try_input_for_type(f"Constant in row {i + 1}, column {j + 1}: ", f"Constant must be a real number.", float)
+					self.constants[i, j] = hp.try_input_for_type(f"Constant in row {i + 1}, column {j + 1}: ", f"Constant must be a real number.", float)
 				else:
-					self.constants[i, j] = self.try_input_for_type(f"Constant in row {i}, column {j}: ", f"Constant must be a real number.", float)
+					self.constants[i, j] = hp.try_input_for_type(f"Constant in row {i}, column {j}: ", f"Constant must be a real number.", float)
 				print(self.constants)
 
 		print(f"\nNow, let's assign the coefficients (x-values, unknown values, or the values in the matrix to the left of the bar)")
 		for i in range(rows):
 			for j in range(cf_columns):
 				if human_row_nums:
-					self.coefficients[i, j] = self.try_input_for_type(f"Coefficient in row {i + 1}, column {j + 1}: ", f"Coefficient must be a real number.", float)
+					self.coefficients[i, j] = hp.try_input_for_type(f"Coefficient in row {i + 1}, column {j + 1}: ", f"Coefficient must be a real number.", float)
 				else:
-					self.coefficients[i, j] = self.try_input_for_type(f"Coefficient in row {i}, column {j}: ", f"Coefficient must be a real number.", float)
+					self.coefficients[i, j] = hp.try_input_for_type(f"Coefficient in row {i}, column {j}: ", f"Coefficient must be a real number.", float)
 				print(self.coefficients)
 
 		print(f"\n{self}")
@@ -152,10 +110,10 @@ class AugmentedMatrix:
 			return
 
 		if first_row == -1:
-			first_row = self.try_input_for_type(f"First row to swap: ", f"Row number must be a positive integer.", int)
+			first_row = hp.try_input_for_type(f"First row to swap: ", f"Row number must be a positive integer.", int)
 
 		if second_row == -1:
-			second_row = self.try_input_for_type(f"Row to swap with: ", f"Row number must be a positive integer.", int)
+			second_row = hp.try_input_for_type(f"Row to swap with: ", f"Row number must be a positive integer.", int)
 
 		try:
 			if human_row_nums:
@@ -224,7 +182,7 @@ class AugmentedMatrix:
 
 			# Divides pivot_row so that the pivot element is 1
 			if not self.coefficients[pivot_row, current_column] == 1 and not self.coefficients[pivot_row, current_column] == 0:
-				print(f"R_{pivot_row + 1} / {self.round_to_n(self.coefficients[pivot_row, current_column], 5)} -> R_{pivot_row + 1}")
+				print(f"R_{pivot_row + 1} / {hp.round_to_n(self.coefficients[pivot_row, current_column], 5)} -> R_{pivot_row + 1}")
 				self.mult_row(pivot_row, 1 / self.coefficients[pivot_row, current_column], True)
 				print(self)
 
@@ -232,10 +190,10 @@ class AugmentedMatrix:
 			for current_row in range(pivot_row + 1, self.coefficients.shape[0]):
 				if not self.coefficients[current_row, current_column] == 0:
 					if np.sign(self.coefficients[pivot_row, current_column]) == np.sign(self.coefficients[current_row, current_column]):	# If the signs of the pivot element and the leading coefficient of subsequent rows are the same, subtract multiples of them
-						print(f"{self.round_to_n(np.absolute(self.coefficients[current_row, current_column]), 5)}R_{pivot_row + 1} - {self.round_to_n(np.absolute(self.coefficients[pivot_row, current_column]), 5)}R_{current_row + 1} -> R_{current_row + 1}")
+						print(f"{hp.round_to_n(np.absolute(self.coefficients[current_row, current_column]), 5)}R_{pivot_row + 1} - {hp.round_to_n(np.absolute(self.coefficients[pivot_row, current_column]), 5)}R_{current_row + 1} -> R_{current_row + 1}")
 						self.add_rows(self.mult_row(pivot_row, self.coefficients[current_row, current_column]), self.mult_row(current_row, self.coefficients[pivot_row, current_column] * -1), current_row)
 					else:	# Otherwise, add multiples of them
-						print(f"{self.round_to_n(np.absolute(self.coefficients[current_row, current_column]), 5)}R_{pivot_row + 1} + {self.round_to_n(np.absolute(self.coefficients[pivot_row, current_column]), 5)}R_{current_row + 1} -> R_{current_row + 1}")
+						print(f"{hp.round_to_n(np.absolute(self.coefficients[current_row, current_column]), 5)}R_{pivot_row + 1} + {hp.round_to_n(np.absolute(self.coefficients[pivot_row, current_column]), 5)}R_{current_row + 1} -> R_{current_row + 1}")
 						self.add_rows(self.mult_row(pivot_row, np.absolute(self.coefficients[current_row, current_column])), self.mult_row(current_row, np.absolute(self.coefficients[pivot_row, current_column])), current_row)
 					print(self)
 
