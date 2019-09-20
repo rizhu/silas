@@ -21,7 +21,7 @@ class AugmentedMatrix:
 		if not x == 0:
 			return round(x, -int(math.floor(math.log10(abs(x)))) + (n - 1))
 		else:
-			return 0
+			return x
 
 	def __str__(self):
 		""" 
