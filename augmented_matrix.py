@@ -76,11 +76,7 @@ class AugmentedMatrix:
 			cf_columns = hp.try_input_for_type(f"Number of columns in the coefficient matrix: ", f"Number of columns must be a positive integer.", int, lambda x : x > 0)
 
 		if const_columns == -1:
-<<<<<<< HEAD
 			const_columns = hp.try_input_for_type(f"Number of columns in the constant matrix: ", f"Number of columns must be a positive integer.", int, lambda x : x > 0)
-=======
-			const_columns = self.try_input_for_type(f"Number of columns in the constant matrix (set to 1 if solving a system of linear equations: ", f"Number of columns must be a positive integer.", int, lambda x : x > 0)
->>>>>>> Minor changes to prompts
 
 		self.constants, self.coefficients = np.zeros((rows, const_columns)), np.zeros((rows, cf_columns))
 
@@ -242,40 +238,7 @@ class AugmentedMatrix:
 		"""
 		Row-reduces augmented matrix with Guass-Jordan elimination
 		"""
-		pivot_row = 0
-		for current_column in range(min(self.coefficients.shape[0], self.coefficients.shape[1])):	# Iterates only over square matrix
-
-			# Checks if pivot row leads with 0 and swaps with a leading non-zero row if the pivot row leads with a zero
-			if self.coefficients[pivot_row, current_column] == 0:
-				leading_nonzero_row = pivot_row + 1
-				while leading_nonzero_row < (self.coefficients.shape[0] - 1) and self.coefficients[leading_nonzero_row, current_column] == 0:	#Increments leading_nonzero_row until a non-zero value in the column is found
-					leading_nonzero_row += 1
-				if leading_nonzero_row < self.coefficients.shape[0] and not self.coefficients[leading_nonzero_row, current_column] == 0:		#Swaps rows only if the entire column isn't just zeros
-					print(f"R_{pivot_row + 1} <-> R_{leading_nonzero_row + 1}")
-					self.swap_rows(pivot_row, leading_nonzero_row)
-					print(self)
-
-			# Divides pivot_row so that the pivot element is 1
-			if not self.coefficients[pivot_row, current_column] == 1 and not self.coefficients[pivot_row, current_column] == 0:
-				print(f"R_{pivot_row + 1} / {self.round_to_n(self.coefficients[pivot_row, current_column], 5)} -> R_{pivot_row + 1}")
-				self.mult_row(pivot_row, 1 / self.coefficients[pivot_row, current_column], True)
-				print(self)
-
-			# Executes row operations to achieve row-reduced-echelon form
-			for current_row in range(self.coefficients.shape[0]):
-				if not self.coefficients[current_row, current_column] == 0 and not current_row == pivot_row:
-					if np.sign(self.coefficients[pivot_row, current_column]) == np.sign(self.coefficients[current_row, current_column]):	# If the signs of the pivot element and the leading coefficient of subsequent rows are the same, subtract multiples of them
-						print(f"{self.round_to_n(np.absolute(self.coefficients[current_row, current_column]), 5)}R_{pivot_row + 1} - {self.round_to_n(np.absolute(self.coefficients[pivot_row, current_column]), 5)}R_{current_row + 1} -> R_{current_row + 1}")
-						self.add_rows(self.mult_row(pivot_row, self.coefficients[current_row, current_column]), self.mult_row(current_row, self.coefficients[pivot_row, current_column] * -1), current_row)
-					else:	# Otherwise, add multiples of them
-						print(f"{self.round_to_n(np.absolute(self.coefficients[current_row, current_column]), 5)}R_{pivot_row + 1} + {self.round_to_n(np.absolute(self.coefficients[pivot_row, current_column]), 5)}R_{current_row + 1} -> R_{current_row + 1}")
-						self.add_rows(self.mult_row(pivot_row, np.absolute(self.coefficients[current_row, current_column])), self.mult_row(current_row, np.absolute(self.coefficients[pivot_row, current_column])), current_row)
-					print(self)
-
-			pivot_row += 1
-		
-		print("Result of Guass-Jordan eliminiation:")
-		print(self)
+		pass
 
 
 
