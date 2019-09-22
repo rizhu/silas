@@ -238,9 +238,6 @@ class AugmentedMatrix:
 		"""
 		Row-reduces augmented matrix with Guass-Jordan elimination
 		"""
-<<<<<<< HEAD
-		pass
-=======
 		pivot_row = 0
 		for current_column in range(min(self.coefficients.shape[0], self.coefficients.shape[1])):	# Iterates only over square matrix
 
@@ -255,28 +252,34 @@ class AugmentedMatrix:
 					print(self)
 
 			# Divides pivot_row so that the pivot element is 1
-			if not self.coefficients[pivot_row, current_column] == 1 and not self.coefficients[pivot_row, current_column] == 0:
-				print(f"R_{pivot_row + 1} / {self.round_to_n(self.coefficients[pivot_row, current_column], 5)} -> R_{pivot_row + 1}")
+			"""if not self.coefficients[pivot_row, current_column] == 1 and not self.coefficients[pivot_row, current_column] == 0:
+				print(f"R_{pivot_row + 1} / {hp.round_to_n(self.coefficients[pivot_row, current_column], 5)} -> R_{pivot_row + 1}")
 				self.mult_row(pivot_row, 1 / self.coefficients[pivot_row, current_column], True)
-				print(self)
+				print(self)"""
 
 			# Executes row operations to achieve row-reduced-echelon form
 			for current_row in range(self.coefficients.shape[0]):
 				if not self.coefficients[current_row, current_column] == 0 and not current_row == pivot_row:
 					if np.sign(self.coefficients[pivot_row, current_column]) == np.sign(self.coefficients[current_row, current_column]):	# If the signs of the pivot element and the leading coefficient of subsequent rows are the same, subtract multiples of them
-						print(f"{self.round_to_n(np.absolute(self.coefficients[current_row, current_column]), 5)}R_{pivot_row + 1} - {self.round_to_n(np.absolute(self.coefficients[pivot_row, current_column]), 5)}R_{current_row + 1} -> R_{current_row + 1}")
+						print(f"{hp.round_to_n(np.absolute(self.coefficients[current_row, current_column]), 5)}R_{pivot_row + 1} - {hp.round_to_n(np.absolute(self.coefficients[pivot_row, current_column]), 5)}R_{current_row + 1} -> R_{current_row + 1}")
 						self.add_rows(self.mult_row(pivot_row, self.coefficients[current_row, current_column]), self.mult_row(current_row, self.coefficients[pivot_row, current_column] * -1), current_row)
 					else:	# Otherwise, add multiples of them
-						print(f"{self.round_to_n(np.absolute(self.coefficients[current_row, current_column]), 5)}R_{pivot_row + 1} + {self.round_to_n(np.absolute(self.coefficients[pivot_row, current_column]), 5)}R_{current_row + 1} -> R_{current_row + 1}")
+						print(f"{hp.round_to_n(np.absolute(self.coefficients[current_row, current_column]), 5)}R_{pivot_row + 1} + {hp.round_to_n(np.absolute(self.coefficients[pivot_row, current_column]), 5)}R_{current_row + 1} -> R_{current_row + 1}")
 						self.add_rows(self.mult_row(pivot_row, np.absolute(self.coefficients[current_row, current_column])), self.mult_row(current_row, np.absolute(self.coefficients[pivot_row, current_column])), current_row)
 					print(self)
 
 			pivot_row += 1
+
+		for row in range(self.coefficients.shape[0]):
+			for col in range(self.coefficients.shape[1]):
+				if not self.coefficients[row, col] == 0:
+					print(f"R_{row + 1} / {hp.round_to_n(self.coefficients[row, col], 5)} -> R_{row + 1}")
+					self.mult_row(row, 1 / self.coefficients[row, col], True)
+					print(self)
+					break
 		
 		print("Result of Guass-Jordan eliminiation:")
 		print(self)
->>>>>>> 716c778f430ab8f96b0c9c732baaec8e7550e087
-
 
 
 
