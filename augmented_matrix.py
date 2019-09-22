@@ -20,19 +20,35 @@ class AugmentedMatrix:
 		"""
 
 		str_matrix = ""
+		longest_len = -1
+		for i in range(self.coefficients.shape[0]):
+			for j in range(self.coefficients.shape[1]):
+				if len(str(hp.round_to_n(self.coefficients[i, j], 5))) > longest_len:
+					longest_len = len(str(hp.round_to_n(self.coefficients[i, j], 5)))
+			for k in range(self.constants.shape[1]):
+				if len(str(hp.round_to_n(self.constants[i, k], 5))) > longest_len:
+					longest_len = len(str(hp.round_to_n(self.constants[i, k], 5)))
 		for i in range(self.coefficients.shape[0]):
 			str_matrix += f"[ "
 			for j in range(self.coefficients.shape[1]):
 				if self.coefficients[i, j] == -0.0:
 					str_matrix += f"{str(0.0)} "
+					for a in range(longest_len - 3):
+						str_matrix += f" "
 				else:
 					str_matrix += f"{str(hp.round_to_n(self.coefficients[i, j], 5))} "
+					for a in range(longest_len - len(str(hp.round_to_n(self.coefficients[i, j], 5)))):
+						str_matrix += f" "
 			str_matrix += f"| "
 			for k in range(self.constants.shape[1]):
 				if self.constants[i, k] == -0.0:
 					str_matrix += f"{0.0} "
+					for a in range(longest_len - 3):
+						str_matrix += f" "
 				else:
 					str_matrix += f"{hp.round_to_n(self.constants[i, k], 5)} "
+					for a in range(longest_len - len(str(hp.round_to_n(self.constants[i, k], 5)))):
+						str_matrix += f" "
 			str_matrix += f"]\n"
 		return str_matrix
 
@@ -43,7 +59,7 @@ class AugmentedMatrix:
 
 		return str(self)
 
-	def build(self, rows = -1, cf_columns = -1, const_columns = -1, human_row_nums = False):
+	def build(self, rows = -1, cf_columns = -1, const_columns = -1, raw_input = False, human_row_nums = False):
 		"""
 		Builds the augmented matrix through a series of user queries
 
@@ -65,22 +81,38 @@ class AugmentedMatrix:
 		self.constants, self.coefficients = np.zeros((rows, const_columns)), np.zeros((rows, cf_columns))
 
 		print(f"\nFirst, let's assign the constants (y-values, measured values, or the values in the matrix to the right of the bar)")
-		for i in range(rows):
-			for j in range(const_columns):
-				if human_row_nums:
-					self.constants[i, j] = hp.try_input_for_type(f"Constant in row {i + 1}, column {j + 1}: ", f"Constant must be a real number.", float)
-				else:
-					self.constants[i, j] = hp.try_input_for_type(f"Constant in row {i}, column {j}: ", f"Constant must be a real number.", float)
-				print(self.constants)
+		if raw_input:
+			elements = hp.build_from_raw_input(f"Input all elements of constants going left-to-right, top-to-bottom as integers or real numbers separated by spaces:\n")
+			if len(elements) == rows * const_columns:
+				self.constants = np.array(elements).reshape((rows, const_columns))
+			else:
+				print(f"Input did not match dimensions of matrix. Stopping build...")
+				return False
+		else:
+			for i in range(rows):
+				for j in range(const_columns):
+					if human_row_nums:
+						self.constants[i, j] = hp.try_input_for_type(f"Constant in row {i + 1}, column {j + 1}: ", f"Constant must be a real number.", float)
+					else:
+						self.constants[i, j] = hp.try_input_for_type(f"Constant in row {i}, column {j}: ", f"Constant must be a real number.", float)
+					print(self.constants)
 
 		print(f"\nNow, let's assign the coefficients (x-values, unknown values, or the values in the matrix to the left of the bar)")
-		for i in range(rows):
-			for j in range(cf_columns):
-				if human_row_nums:
-					self.coefficients[i, j] = hp.try_input_for_type(f"Coefficient in row {i + 1}, column {j + 1}: ", f"Coefficient must be a real number.", float)
-				else:
-					self.coefficients[i, j] = hp.try_input_for_type(f"Coefficient in row {i}, column {j}: ", f"Coefficient must be a real number.", float)
-				print(self.coefficients)
+		if raw_input:
+			elements = hp.build_from_raw_input(f"Input all elements of coefficients going left-to-right, top-to-bottom as integers or real numbers separated by spaces:\n")
+			if len(elements) == rows * cf_columns:
+				self.coefficients = np.array(elements).reshape((rows, cf_columns))
+			else:
+				print(f"Input did not match dimensions of matrix. Stopping build...")
+				return False
+		else:
+			for i in range(rows):
+				for j in range(cf_columns):
+					if human_row_nums:
+						self.coefficients[i, j] = hp.try_input_for_type(f"Coefficient in row {i + 1}, column {j + 1}: ", f"Coefficient must be a real number.", float)
+					else:
+						self.coefficients[i, j] = hp.try_input_for_type(f"Coefficient in row {i}, column {j}: ", f"Coefficient must be a real number.", float)
+					print(self.coefficients)
 
 		print(f"\n{self}")
 
