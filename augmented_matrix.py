@@ -251,12 +251,6 @@ class AugmentedMatrix:
 					self.swap_rows(pivot_row, leading_nonzero_row)
 					print(self)
 
-			# Divides pivot_row so that the pivot element is 1
-			"""if not self.coefficients[pivot_row, current_column] == 1 and not self.coefficients[pivot_row, current_column] == 0:
-				print(f"R_{pivot_row + 1} / {hp.round_to_n(self.coefficients[pivot_row, current_column], 5)} -> R_{pivot_row + 1}")
-				self.mult_row(pivot_row, 1 / self.coefficients[pivot_row, current_column], True)
-				print(self)"""
-
 			# Executes row operations to achieve row-reduced-echelon form
 			for current_row in range(self.coefficients.shape[0]):
 				if not self.coefficients[current_row, current_column] == 0 and not current_row == pivot_row:
