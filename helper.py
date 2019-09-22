@@ -1,6 +1,7 @@
 import math
 
 def round_to_n(x, n):
+<<<<<<< HEAD
 	"""
 	Rounds float x to n significant figures
 	"""
@@ -62,6 +63,8 @@ def build_from_raw_input(input_str):
 				print(f"At least one input was not a real number. Stopping build...")
 				return False
 	return elements
+=======
+>>>>>>> 716c778f430ab8f96b0c9c732baaec8e7550e087
 		"""
 		Rounds float x to n significant figures
 		"""
@@ -101,5 +104,9 @@ def try_input_for_type(input_str, error_string, type_func = str, cond = lambda x
 					valid = True
 				else:
 					print(error_string)
+<<<<<<< HEAD
 		return return_value
 >>>>>>> Dealing with merge conflicts
+=======
+		return return_value
+>>>>>>> 716c778f430ab8f96b0c9c732baaec8e7550e087
