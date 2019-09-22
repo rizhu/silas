@@ -1,7 +1,6 @@
 import math
 
 def round_to_n(x, n):
-<<<<<<< HEAD
 	"""
 	Rounds float x to n significant figures
 	"""
@@ -63,8 +62,6 @@ def build_from_raw_input(input_str):
 				print(f"At least one input was not a real number. Stopping build...")
 				return False
 	return elements
-=======
->>>>>>> 716c778f430ab8f96b0c9c732baaec8e7550e087
 		"""
 		Rounds float x to n significant figures
 		"""
