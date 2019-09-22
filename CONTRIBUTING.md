@@ -4,7 +4,7 @@ Below are the guidelines for contributing to silas. Follow these steps so you do
 
 1. Open an issue for any code you want to add. Label the issue with whatever is appropriate.
 2. Clone the repository or run `git pull` in the repository to pull the latest changes from `master`.
-3. Create a new branch for the code being added using `git checkout -b your-branch-name`. For enhancement issues, begin branch names with `add` and for bug issues, begin branch names with `fix`. Keep branch names short.
+3. Create a new branch for the code being added using `git checkout -b your-branch-name`, unless you are pushing very minor fixes (changes in README, changes to output, changes to docstrings, etc). For enhancement issues, begin branch names with `add` and for bug issues, begin branch names with `fix`. Keep branch names short.
 4. Create your code.
 5. Make sure to keep your branch consistent with `master` by running `git rebase master` within the branch.
 6. Add changes made to files using `git add file-name`. Make sure that you are in your own branch, and not `master`.
