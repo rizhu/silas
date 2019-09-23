@@ -253,7 +253,7 @@ class AugmentedMatrix:
 
 			# Executes row operations to achieve row-reduced-echelon form
 			for current_row in range(self.coefficients.shape[0]):
-				if not self.coefficients[current_row, current_column] == 0 and not current_row == pivot_row:
+				if not self.coefficients[current_row, current_column] == 0 and not current_row == pivot_row and not self.coefficients[pivot_row, current_column] == 0:
 					if np.sign(self.coefficients[pivot_row, current_column]) == np.sign(self.coefficients[current_row, current_column]):	# If the signs of the pivot element and the leading coefficient of subsequent rows are the same, subtract multiples of them
 						print(f"{hp.round_to_n(np.absolute(self.coefficients[current_row, current_column]), 5)}R_{pivot_row + 1} - {hp.round_to_n(np.absolute(self.coefficients[pivot_row, current_column]), 5)}R_{current_row + 1} -> R_{current_row + 1}")
 						self.add_rows(self.mult_row(pivot_row, self.coefficients[current_row, current_column]), self.mult_row(current_row, self.coefficients[pivot_row, current_column] * -1), current_row)
@@ -264,9 +264,12 @@ class AugmentedMatrix:
 
 			pivot_row += 1
 
+		# Divdes each row to achieve pivot cell of 1
 		for row in range(self.coefficients.shape[0]):
 			for col in range(self.coefficients.shape[1]):
 				if not self.coefficients[row, col] == 0:
+					if self.coefficients[row, col] == 1:
+						break
 					print(f"R_{row + 1} / {hp.round_to_n(self.coefficients[row, col], 5)} -> R_{row + 1}")
 					self.mult_row(row, 1 / self.coefficients[row, col], True)
 					print(self)
