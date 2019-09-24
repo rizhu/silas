@@ -1,59 +1,64 @@
 import augmented_matrix as am
 
-a = am.AugmentedMatrix()
+var_list = {
+}
+
+def parse_input(input_str: str):
+	if input_str == "exit":
+		exit()
+	elif input_str == "help":
+		print(f"Silas general commands (abbreviations indicated by 'abbr.'):")
+		print(f"- exit: closes Silas")
+		print(f"- listvars: displays all variables")
+		return print(f"- augmentedmatrix: Augmented Matrix support. Type 'augmentedmatrix help' for more info")
+	elif input_str == "listvars":
+		for key in var_list:
+			print(key)
+		return
+	try:
+		parsed_cmd = input_str.split(" ")
+	except AttributeError:
+		return print(f"Command not recognized. Type help in order to view all commands.")
+	if parsed_cmd[0] == "augmentedmatrix" or parsed_cmd[0] == "am":
+		if len(parsed_cmd) == 2 and parsed_cmd[1] == "help":
+			print(f"Commands for augmented_matrix (abbr. am):")
+			print(f"- augmentedmatrix create <var_name>: creates an augmentedmatrix stored as <var_name>")
+			print(f"- <var_name> build [rows] [right_columns] [left_columns]: builds augmentedmatrix at <var_name> with optional dimensions")
+			print(f"- <var_name> fastbuild [rows] [right_columns] [left_columns]: builds augmentedmatrix at <var_name> with optional dimensions from raw input")
+			return print(f"- <var-name> elim [gaussian (abbr. g)/gauss-jordan (abbr. gj)]: row-reduces augmented matrix using Gaussian or Gauss-Jordan elimination")
+		elif len(parsed_cmd) == 3 and parsed_cmd[1] == "create":
+			var_list.update({parsed_cmd[2] : am.AugmentedMatrix()})
+			return print(f"Created augmented matrix as {parsed_cmd[2]}")
+		else:
+			return print("Command not recognized. Type 'augmentedmatrix help' in order to view all augmentedmatrix commands.")
+	elif parsed_cmd[0] in var_list:
+		if len(parsed_cmd) == 1:
+			return print(var_list[parsed_cmd[0]])
+		if type(var_list[parsed_cmd[0]]) == am.AugmentedMatrix:
+			if len(parsed_cmd) >= 2 and parsed_cmd[1] == "build":
+				if len(parsed_cmd) == 5:
+					var_list[parsed_cmd[0]].build(int(parsed_cmd[2]), int(parsed_cmd[3]), int(parsed_cmd[4]), raw_input = False, human_row_nums = True)
+				else:
+					var_list[parsed_cmd[0]].build(rows = -1, cf_columns = -1, const_columns = -1, raw_input = False, human_row_nums = True)
+			elif len(parsed_cmd) >= 2 and parsed_cmd[1] == "fastbuild":
+				if len(parsed_cmd) == 5:
+					var_list[parsed_cmd[0]].build(int(parsed_cmd[2]), int(parsed_cmd[3]), int(parsed_cmd[4]), raw_input = True, human_row_nums = True)
+				else:
+					var_list[parsed_cmd[0]].build(rows = -1, cf_columns = -1, const_columns = -1, raw_input = True, human_row_nums = True)
+			elif len(parsed_cmd) >= 3 and parsed_cmd[1] == "elim":
+				if parsed_cmd[2] == "gaussian" or "g":
+					var_list[parsed_cmd[0]].elim_gaussian()
+				elif parsed_cmd[2] == "gauss-jordan" or "gj":
+					var_list[parsed_cmd[0]].elim_gauss_jordan()
+			else:
+				return print("Command not recognized. Type 'augmentedmatrix help' in order to view all augmentedmatrix commands.")
+	else:
+		return print(f"Command not recognized. Type help in order to view all commands.")
+
+
 
 print(f"\n\nSilas is developed by Imran Khaliq, Noor Mahini, and Richard Hu and is licensed under the GNU General Public Licence.\n\n\n")
-print(f"Welcome to Silas, the Somewhat Interactive Linear Algebra Software!\n")
+print(f"Welcome to Silas, the Somewhat Interactive Linear Algebra Software!\nType help if you're unsure how to begin!\n")
 
-def build(rows = -1, cf_columns = -1, const_columns = -1, raw_input = False, human_row_nums = True):
-	"""
-	Calls build function from augmented_matrix
-	"""
-
-	a.build(rows, cf_columns, const_columns, raw_input, human_row_nums)
-
-def get_row(row, human_row_nums = False):
-	"""
-	Calls get_row from augmented_matrix
-	"""
-
-	return a.get_row(row, human_row_nums)
-
-def swap_rows(first_row = -1, second_row = -1, human_row_nums = True):
-	"""
-	Calls swap_rows from augmented_matrix and prints the matrix
-	"""
-	
-	a.swap_rows(first_row, second_row, human_row_nums)
-	print(a)
-
-def mult_row(row, constant, store = True, human_row_nums = True):
-	"""
-	Calls mult_row from augmented_matrix and prints matrix
-	"""
-
-	a.mult_row(row, constant, store, human_row_nums)
-	print(a)
-
-def add_rows(first_row, second_row, store_row, human_row_nums = True):
-	"""
-	Calls add_rows from augmented_matrix and prints matrix
-	"""
-
-	a.add_rows(first_row, second_row, store_row, human_row_nums)
-	print(a)
-
-def elim_gaussian():
-	"""
-	Calls elim_gaussian from augmented_matrix
-	"""
-
-	a.elim_gaussian()
-
-def elim_gauss_jordan():
-	"""
-	Calss elim_gauss_jordan from augmented_matrix
-	"""
-
-	a.elim_gauss_jordan()
-
+while True:
+	parse_input(input(f"> "))
