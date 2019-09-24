@@ -1,4 +1,5 @@
 import math
+import sympy 
 
 def round_to_n(x, n):
 	"""
@@ -95,3 +96,14 @@ def try_input_for_type(input_str, error_string, type_func = str, cond = lambda x
 				else:
 					print(error_string)
 		return return_value
+
+def div_with_fractions(numerator, denominator):
+		"""
+		Returns a fraction if inputs are not divisible
+
+		Otherwise, returns the result of division
+		"""
+		if numerator % denominator != 0:
+			return sympy.Rational('numerator/denominator')
+		else:
+			return numerator / denominator
