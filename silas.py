@@ -46,9 +46,9 @@ def parse_input(input_str: str):
 				else:
 					var_list[parsed_cmd[0]].build(rows = -1, cf_columns = -1, const_columns = -1, raw_input = True, human_row_nums = True)
 			elif len(parsed_cmd) >= 3 and parsed_cmd[1] == "elim":
-				if parsed_cmd[2] == "gaussian" or "g":
+				if parsed_cmd[2] == "gaussian" or parsed_cmd[2] == "g":
 					var_list[parsed_cmd[0]].elim_gaussian()
-				elif parsed_cmd[2] == "gauss-jordan" or "gj":
+				elif parsed_cmd[2] == "gauss-jordan" or parsed_cmd[2] == "gj":
 					var_list[parsed_cmd[0]].elim_gauss_jordan()
 			else:
 				return print("Command not recognized. Type 'augmentedmatrix help' in order to view all augmentedmatrix commands.")
