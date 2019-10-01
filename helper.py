@@ -43,7 +43,7 @@ def try_input_for_type(input_str, error_string, type_func = str, cond = lambda x
 				print(error_string)
 	return return_value
 
-def build_from_raw_input(input_str):
+def build_fast(input_str):
 	"""
 	Returns a list from a string of floats separated by whitespace
 	"""
