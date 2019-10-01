@@ -1,9 +1,11 @@
-import augmented_matrix as am
+import classes.augmented_matrix as am
+import strings
+import argparse
 
 var_list = {
 }
 
-def parse_input(input_str: str):
+"""def parse_input(input_str: str):
 	if input_str == "exit":
 		exit()
 	elif input_str == "help":
@@ -53,12 +55,17 @@ def parse_input(input_str: str):
 			else:
 				return print("Command not recognized. Type 'augmentedmatrix help' in order to view all augmentedmatrix commands.")
 	else:
-		return print(f"Command not recognized. Type help in order to view all commands.")
+		return print(f"Command not recognized. Type help in order to view all commands.")"""
 
 
 
-print(f"\n\nSilas is developed by Imran Khaliq, Noor Mahini, and Richard Hu and is licensed under the GNU General Public Licence.\n\n\n")
-print(f"Welcome to Silas, the Somewhat Interactive Linear Algebra Software!\nType help if you're unsure how to begin!\n")
+def main():
+	parser = argparse.ArgumentParser()
 
-while True:
-	parse_input(input(f"> "))
+	"""while True:
+		parse_input(input(f"> "))"""
+	parser.parse_args()
+
+if __name__ == "__main__":
+    main()
+

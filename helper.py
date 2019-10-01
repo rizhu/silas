@@ -1,4 +1,5 @@
 import math
+import strings
 
 def round_to_n(x, n):
 	"""
@@ -59,6 +60,6 @@ def build_from_raw_input(input_str):
 					elements.append(float(input_elements[start_index: i]))
 					start_index = i + 1
 			except ValueError:
-				print(f"At least one input was not a real number. Stopping build...")
+				print(string.real_num_error)
 				return False
 	return elements
