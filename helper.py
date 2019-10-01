@@ -1,7 +1,7 @@
 import math
 import strings
 
-def round_to_n(x, n):
+def round_to_n(x: float, n):
 	"""
 	Rounds float x to n significant figures
 	"""
