@@ -5,66 +5,25 @@ import argparse
 var_list = {
 }
 
-"""def parse_input(input_str: str):
-	if input_str == "exit":
-		exit()
-	elif input_str == "help":
-		print(f"Silas general commands (abbreviations indicated by 'abbr.'):")
-		print(f"- exit: closes Silas")
-		print(f"- listvars: displays all variables")
-		return print(f"- augmentedmatrix: Augmented Matrix support. Type 'augmentedmatrix help' for more info")
-	elif input_str == "listvars":
-		for key in var_list:
-			print(key)
-		return
-	try:
-		parsed_cmd = input_str.split(" ")
-	except AttributeError:
-		return print(f"Command not recognized. Type help in order to view all commands.")
-	if parsed_cmd[0] == "augmentedmatrix" or parsed_cmd[0] == "am":
-		if len(parsed_cmd) == 2 and parsed_cmd[1] == "help":
-			print(f"Commands for augmented_matrix (abbr. am):")
-			print(f"- augmentedmatrix create <var_name>: creates an augmentedmatrix stored as <var_name>")
-			print(f"- <var_name> build [rows] [right_columns] [left_columns]: builds augmentedmatrix at <var_name> with optional dimensions")
-			print(f"- <var_name> fastbuild [rows] [right_columns] [left_columns]: builds augmentedmatrix at <var_name> with optional dimensions from raw input")
-			return print(f"- <var-name> elim [gaussian (abbr. g)/gauss-jordan (abbr. gj)]: row-reduces augmented matrix using Gaussian or Gauss-Jordan elimination")
-		elif len(parsed_cmd) == 3 and parsed_cmd[1] == "create":
-			var_list.update({parsed_cmd[2] : am.AugmentedMatrix()})
-			return print(f"Created augmented matrix as {parsed_cmd[2]}")
-		else:
-			return print("Command not recognized. Type 'augmentedmatrix help' in order to view all augmentedmatrix commands.")
-	elif parsed_cmd[0] in var_list:
-		if len(parsed_cmd) == 1:
-			return print(var_list[parsed_cmd[0]])
-		if type(var_list[parsed_cmd[0]]) == am.AugmentedMatrix:
-			if len(parsed_cmd) >= 2 and parsed_cmd[1] == "build":
-				if len(parsed_cmd) == 5:
-					var_list[parsed_cmd[0]].build(int(parsed_cmd[2]), int(parsed_cmd[3]), int(parsed_cmd[4]), raw_input = False, human_row_nums = True)
-				else:
-					var_list[parsed_cmd[0]].build(rows = -1, cf_columns = -1, const_columns = -1, raw_input = False, human_row_nums = True)
-			elif len(parsed_cmd) >= 2 and parsed_cmd[1] == "fastbuild":
-				if len(parsed_cmd) == 5:
-					var_list[parsed_cmd[0]].build(int(parsed_cmd[2]), int(parsed_cmd[3]), int(parsed_cmd[4]), raw_input = True, human_row_nums = True)
-				else:
-					var_list[parsed_cmd[0]].build(rows = -1, cf_columns = -1, const_columns = -1, raw_input = True, human_row_nums = True)
-			elif len(parsed_cmd) >= 3 and parsed_cmd[1] == "elim":
-				if parsed_cmd[2] == "gaussian" or parsed_cmd[2] == "g":
-					var_list[parsed_cmd[0]].elim_gaussian()
-				elif parsed_cmd[2] == "gauss-jordan" or parsed_cmd[2] == "gj":
-					var_list[parsed_cmd[0]].elim_gauss_jordan()
-			else:
-				return print("Command not recognized. Type 'augmentedmatrix help' in order to view all augmentedmatrix commands.")
-	else:
-		return print(f"Command not recognized. Type help in order to view all commands.")"""
-
-
-
 def main():
-	parser = argparse.ArgumentParser()
+	main_parser = argparse.ArgumentParser()
+	main_parser.add_argument("-ls", "--listvars", help = "lists names of all stored variables", action ='store_true')
+	subparsers = main_parser.add_subparsers(help='<sub-command> help')
 
-	"""while True:
-		parse_input(input(f"> "))"""
-	parser.parse_args()
+	am_parser = subparsers.add_parser('augmentedmatrix', aliases = ["am"])
+	am_parser.add_argument("-c", "--create", metavar = "<var-name>", type = str, help = "creates an augmented matrix with variable name as <var-name>")
+	am_parser.add_argument("-b", "--build", metavar = "<var-name>", type = str, help = "builds augmented matrix stored at <var_name>")
+
+	args = main_parser.parse_args()
+	if args.listvars:
+		print([key for key in var_list])
+	elif args.create:
+		var_list.update({args.create : am.AugmentedMatrix()})
+	elif args.build:
+		try:
+			var_list[args.build]
+		except:
+			print(f"Variable name not found")
 
 if __name__ == "__main__":
     main()
