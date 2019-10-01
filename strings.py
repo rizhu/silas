@@ -14,6 +14,17 @@ about_silas = f"Silas is developed by Imran Khaliq, Noor Mahini, and Richard Hu 
 
 general_help = f""
 am_help = f"- augmentedmatrix create <var_name>: creates an augmentedmatrix stored as <var_name>"
+
+###############################
+#                             #
+# Variable Management Strings #
+#                             #
+###############################
+
+var_not_found = f"Variable not found"
+var_not_fetched = f"Unable to fetch variable"
+
+am_encoding = f"augmentedmatrix"
    
 ###############################
 #                             #

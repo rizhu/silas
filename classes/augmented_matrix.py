@@ -71,14 +71,15 @@ class AugmentedMatrix:
 		"""
 		Returns representation of AugmentedMatrix object that can be encoded into var_list.silas
 		"""
-		var_repr = f"am "
-		var_repr += f"{self.get_dims()[0]} {self.get_dims()[1]} {self.get_dims()[2]} "
-		for row in self.coefficients:
-			for element in row:
-				var_repr += f"{element} "
-		for row in self.constants:
-			for element in row:
-				var_repr += f"{element} "
+		var_repr = f"{strings.am_encoding} "
+		if self.coefficients.all() and self.constants.all():
+			var_repr += f"{self.get_dims()[0]} {self.get_dims()[1]} {self.get_dims()[2]} "
+			for row in self.coefficients:
+				for element in row:
+					var_repr += f"{element} "
+			for row in self.constants:
+				for element in row:
+					var_repr += f"{element} "
 		return var_repr
 
 	def build(self, rows = -1, cf_columns = -1, const_columns = -1, fast_build = False, human_row_nums = False, var_input = ""):
@@ -130,7 +131,7 @@ class AugmentedMatrix:
 				for i in range(rows):
 					for j in range(const_columns):
 						if human_row_nums:
-							self.constants[i, j] = hp.try_input_for_type(f"Constant in row {i + 1}, column {j + 1}: ", strings.eal_num_check, float)
+							self.constants[i, j] = hp.try_input_for_type(f"Constant in row {i + 1}, column {j + 1}: ", strings.real_num_check, float)
 						else:
 							self.constants[i, j] = hp.try_input_for_type(f"Constant in row {i}, column {j}: ", strings.real_num_check, float)
 						print(self.constants)
