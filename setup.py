@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="silas",
-    version="0.0.0",
+    version="0.0.1",
     author="Richard Hu",
     author_email="",
     description="linear algebra package",
@@ -14,7 +14,7 @@ setuptools.setup(
     url="https://github.com/rhu2001/silas",
     packages=setuptools.find_packages(),
     entry_points={
-        'console_scripts': ['mycli=mymodule:cli'],
+        'console_scripts': ['silas=silas:main'],
     },
     classifiers=[
         "Programming Language :: Python :: 3",

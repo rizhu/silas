@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import classes.augmented_matrix as am
 import var_list
 import strings
