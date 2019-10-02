@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-import classes.augmented_matrix as am
-import var_list
-import strings
 import argparse
+from silas import var_list
+from silas import strings
+from classes import augmented_matrix as am
 
 def m_create(args):
 	pass
@@ -22,6 +22,7 @@ def am_defaults(args):
 def main():
 	main_parser = argparse.ArgumentParser()
 	main_parser.add_argument("-ls", "--listvars", help = "lists names of all stored variables", action ='store_true')
+	main_parser.add_argument("--clear", help = "clears all variables", action ='store_true')
 	subparsers = main_parser.add_subparsers(help='<sub-command> help')
 
 	m_parser = subparsers.add_parser('matrix', aliases = ["m"])
@@ -36,6 +37,8 @@ def main():
 	args = main_parser.parse_args()
 	if args.listvars:
 		var_list.print_all()
+	elif args.clear:
+		var_list.clear()
 	else:
 		args.func(args)
 

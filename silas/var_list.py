@@ -1,6 +1,6 @@
-import classes.augmented_matrix as am
-import strings
 import os
+from silas import strings
+from classes import augmented_matrix as am
 
 with open("var_list.silas", "a+") as var_list:
 	var_list.close()
@@ -12,7 +12,6 @@ def clear():
 	with open("var_list.silas", "r+") as var_list:
 		var_list.truncate(0)
 		var_list.close
-
 
 
 def store_var(var_name: str, var):

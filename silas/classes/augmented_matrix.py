@@ -1,7 +1,7 @@
 import numpy as np
-import helper as hp
-import strings
 import sys
+import helper as hp
+from silas import strings
 
 class AugmentedMatrix:
 	"""
