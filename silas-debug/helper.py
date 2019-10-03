@@ -1,5 +1,5 @@
 import math
-from . import strings
+import strings
 
 def round_to_n(x: float, n):
 	"""

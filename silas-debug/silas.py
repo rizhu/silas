@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
-from . import var_list
-from . import strings
-from .classes import augmented_matrix as am
+import var_list
+import strings
+from classes import augmented_matrix as am
 
 def m_create(args):
 	pass

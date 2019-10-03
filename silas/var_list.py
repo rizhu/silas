@@ -41,7 +41,7 @@ def get_var(var_name: str):
 	var_name: name of variable to be fetched
 	"""
 	lines, var_line = "", ""
-	with open("var_list.silas", "a+") as var_list:
+	with open("var_list.silas", "r") as var_list:
 		lines = var_list.readlines()
 		var_list.close()
 	for line in lines:
@@ -50,9 +50,9 @@ def get_var(var_name: str):
 			break
 	if var_line:
 		var_line = var_line.split()
-		if var_line[1] == strings.am_encoding:
+		if var_line[2] == strings.am_encoding:
 			var = am.AugmentedMatrix()
-			var.build(var_input = var_line[2:])
+			var.build(var_input = var_line[3:])
 			return var
 		else:
 			return print(strings.var_not_fetched)
@@ -70,5 +70,3 @@ def print_all():
 	for line in lines:
 		str_line += f"{line.split()[0]} : {line.split()[2]}\n"
 	print(str_line)
-
-

@@ -1,7 +1,7 @@
 import numpy as np
 import sys
-from .. import helper as hp
-from .. import strings
+import helper as hp
+import strings
 
 class AugmentedMatrix:
 	"""
@@ -94,19 +94,17 @@ class AugmentedMatrix:
 		raw_input:      Builds augmented matrix from var_repr string
 		"""
 		if var_input:
-			list_repr = var_input.split()
+			#list_repr = var_input.split()
 
-			rows = int(list_repr[1])
-			cf_columns = int(list_repr[2])
-			const_columns = int(list_repr[3])
+			rows = int(var_input[0])
+			cf_columns = int(var_input[1])
+			const_columns = int(var_input[2])
 
 			cf_size = rows * cf_columns
 			const_size = rows * const_columns
 
-			self.coefficients = np.array([float(element) for element in list_repr[4 : 4 + cf_size]]).reshape((rows, cf_columns))
-			print(self.coefficients)
-			self.constants = np.array([float(element) for element in list_repr[4 + cf_size : ]]).reshape((rows, const_columns))
-			print(self.constants)
+			self.coefficients = np.array([float(element) for element in var_input[3 : 3 + cf_size]]).reshape((rows, cf_columns))
+			self.constants = np.array([float(element) for element in var_input[3 + cf_size : ]]).reshape((rows, const_columns))
 		else:
 			if rows == -1:
 				rows = hp.try_input_for_type(strings.row_query, strings.row_error, int, lambda x : x > 0)
@@ -153,7 +151,7 @@ class AugmentedMatrix:
 							self.coefficients[i, j] = hp.try_input_for_type(f"Coefficient in row {i}, column {j}: ", strings.real_num_check, float)
 						print(self.coefficients)
 
-		print(f"\n{self}")
+			print(f"\n{self}")
 
 	def get_row(self, row, human_row_nums = False):
 		"""
