@@ -1,4 +1,4 @@
-from .silas import silas
+from . import silas
 
 def main():
 	silas.main()

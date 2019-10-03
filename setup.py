@@ -8,7 +8,7 @@ setuptools.setup(
     version = "0.0.5.2",
     author = "Richard Hu",
     author_email = "r.hu@berkeley.edu",
-    description = "Linear algebra software",
+    description = "Linear algebra software running in terminal",
     long_description = long_description,
     long_description_content_type = "text/markdown",
     url = "https://github.com/rhu2001/silas",

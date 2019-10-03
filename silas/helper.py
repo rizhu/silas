@@ -1,5 +1,5 @@
 import math
-from .silas import strings
+from . import strings
 
 def round_to_n(x: float, n):
 	"""

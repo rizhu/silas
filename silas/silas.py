@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
-from silas import var_list
-from silas import strings
-from classes import augmented_matrix as am
+from . import var_list
+from . import strings
+from .classes import augmented_matrix as am
 
 def m_create(args):
 	pass
@@ -18,6 +18,7 @@ def am_defaults(args):
 		temp_am = var_list.get_var(args.build)
 		temp_am.build()
 		var_list.store_var(args.build, temp_am)
+		del temp_am
 
 def main():
 	main_parser = argparse.ArgumentParser()
