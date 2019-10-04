@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name = "silas",
-    version = "0.0.6.1",
+    version = "0.1.0",
     author = "Richard Hu",
     author_email = "r.hu@berkeley.edu",
     description = "Linear algebra software running in terminal",
