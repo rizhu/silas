@@ -1,5 +1,10 @@
 import math
 from . import strings
+"""
+import math
+import strings
+"""
+
 
 def round_to_n(x: float, n):
 	"""
@@ -16,7 +21,7 @@ def cmd_check(check_input, return_type = str):
 
 	check_input: Input to be checked
 	"""
-	if check_input == "exit()":
+	if check_input == "exit":
 		exit()
 	return check_input
 

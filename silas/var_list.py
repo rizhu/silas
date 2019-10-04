@@ -1,6 +1,12 @@
 import os
 from . import strings
 from .classes import augmented_matrix as am
+"""
+import os
+import strings
+from classes import augmented_matrix as am
+"""
+
 
 with open("var_list.silas", "a+") as var_list:
 	var_list.close()

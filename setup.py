@@ -5,14 +5,14 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name = "silas",
-    version = "0.0.5.7",
+    version = "0.0.6.1",
     author = "Richard Hu",
     author_email = "r.hu@berkeley.edu",
     description = "Linear algebra software running in terminal",
     long_description = long_description,
     long_description_content_type = "text/markdown",
     url = "https://github.com/rhu2001/silas",
-    packages = setuptools.find_packages(),
+    packages = setuptools.find_packages(exclude=['*.silas']),
     entry_points = {
         'console_scripts': ['silas=silas.silas_cli:main'],
     },

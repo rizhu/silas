@@ -2,6 +2,13 @@ import numpy as np
 import sys
 from .. import helper as hp
 from .. import strings
+"""
+import numpy as np
+import sys
+import helper as hp
+import strings
+"""
+
 
 class AugmentedMatrix:
 	"""
@@ -117,23 +124,6 @@ class AugmentedMatrix:
 
 			self.constants, self.coefficients = np.zeros((rows, const_columns)), np.zeros((rows, cf_columns))
 
-			print(strings.assign_consts)
-			if fast_build:
-				elements = hp.build_fast(strings.fast_query)
-				if len(elements) == rows * const_columns:
-					self.constants = np.array(elements).reshape((rows, const_columns))
-				else:
-					print(strings.dim_error)
-					return False
-			else:
-				for i in range(rows):
-					for j in range(const_columns):
-						if human_row_nums:
-							self.constants[i, j] = hp.try_input_for_type(f"Constant in row {i + 1}, column {j + 1}: ", strings.real_num_check, float)
-						else:
-							self.constants[i, j] = hp.try_input_for_type(f"Constant in row {i}, column {j}: ", strings.real_num_check, float)
-						print(self.constants)
-
 			print(strings.assign_cfs)
 			if fast_build:
 				elements = hp.build_fast(strings.fast_query)
@@ -150,6 +140,23 @@ class AugmentedMatrix:
 						else:
 							self.coefficients[i, j] = hp.try_input_for_type(f"Coefficient in row {i}, column {j}: ", strings.real_num_check, float)
 						print(self.coefficients)
+
+			print(strings.assign_consts)
+			if fast_build:
+				elements = hp.build_fast(strings.fast_query)
+				if len(elements) == rows * const_columns:
+					self.constants = np.array(elements).reshape((rows, const_columns))
+				else:
+					print(strings.dim_error)
+					return False
+			else:
+				for i in range(rows):
+					for j in range(const_columns):
+						if human_row_nums:
+							self.constants[i, j] = hp.try_input_for_type(f"Constant in row {i + 1}, column {j + 1}: ", strings.real_num_check, float)
+						else:
+							self.constants[i, j] = hp.try_input_for_type(f"Constant in row {i}, column {j}: ", strings.real_num_check, float)
+						print(self.constants)
 
 			print(f"\n{self}")
 

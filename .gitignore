@@ -126,4 +126,4 @@ dmypy.json
 .DS_Store
 
 # Variable list
-var_list.silas
+*.silas
