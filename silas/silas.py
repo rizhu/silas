@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+"""
 import argparse
 from . import var_list
 from . import strings
@@ -9,7 +9,7 @@ import argparse
 import var_list
 import strings
 from classes import augmented_matrix as am
-"""
+
 
 def main_defaults(args):
 	if args.help:
@@ -40,12 +40,17 @@ def am_defaults(args):
 		del temp_am
 	elif args.elim:
 		temp_am = var_list.get_var(args.elim[0])
-		if args.elim[1].lower() == 'gaussian' or args.elim[1].lower() == 'g':
+		if args.elim[1].lower() == "gaussian" or args.elim[1].lower() == "g":
 			temp_am.elim_gaussian()
-		elif args.elim[1].lower() == 'gaussjordan' or args.elim[1].lower() == 'gj':
+		elif args.elim[1].lower() == "gaussjordan" or args.elim[1].lower() == "gj":
 			temp_am.elim_gauss_jordan()
 		else:
 			print("Final argument must be 'gaussian' [abbr. 'g'] or 'gaussjordan' [abbr. 'gj'].")
+		if len(args.elim) == 3 and args.elim[2]:
+			if args.elim[2] == "store" or args.elim[2] == "s":
+				var_list.store_var(args.elim[0], temp_am)
+			else:
+				print("Optional store argument must be 'store' [abbr. 's'].")
 		del temp_am
 
 
@@ -67,7 +72,7 @@ def main():
 	am_parser.add_argument("-h", "--help", action ='store_true')
 	am_parser.add_argument("-c", "--create", metavar = "<var-name>", type = str)
 	am_parser.add_argument("-b", "--build", metavar = "<var-name>", type = str)
-	am_parser.add_argument("-e", "--elim", nargs = 2, metavar = ("<var-name>", "<algorithm>"), type = str)
+	am_parser.add_argument("-e", "--elim", nargs = '+', type = str)
 	am_parser.set_defaults(func = am_defaults)
 
 	args = main_parser.parse_args()

@@ -1,4 +1,4 @@
-import numpy as np
+"""import numpy as np
 import sys
 from .. import helper as hp
 from .. import strings
@@ -7,7 +7,7 @@ import numpy as np
 import sys
 import helper as hp
 import strings
-"""
+
 
 
 class AugmentedMatrix:
@@ -79,7 +79,7 @@ class AugmentedMatrix:
 		Returns representation of AugmentedMatrix object that can be encoded into var_list.silas
 		"""
 		var_repr = f"{strings.am_encoding} "
-		if self.coefficients.all() and self.constants.all():
+		if not (self.coefficients.size == 0 or self.constants.size == 0):
 			var_repr += f"{self.get_dims()[0]} {self.get_dims()[1]} {self.get_dims()[2]} "
 			for row in self.coefficients:
 				for element in row:
@@ -87,7 +87,7 @@ class AugmentedMatrix:
 			for row in self.constants:
 				for element in row:
 					var_repr += f"{element} "
-		return var_repr
+			return var_repr
 
 	def build(self, rows = -1, cf_columns = -1, const_columns = -1, fast_build = False, human_row_nums = False, var_input = ""):
 		"""

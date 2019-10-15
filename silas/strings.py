@@ -23,16 +23,16 @@ augmentedmatrix [abbr. am]      augmented matrix sub-commands. Use 'silas augmen
 --clear                         removes all stored variables
 --help [abbr. -h]               opens this help menu
 --listvars [abbr. -ls]          lists all stored variables and their type
---show [abbr. -s] <var-name>	prints the variable stored at <var-name>
+--show [abbr. -s] <var-name>    prints the variable stored at <var-name>
 """
 general_arg_help = f"Command not found. Type 'silas --help [abbr. -h]' for a list of general commands."
 am_help = f"""
 Augmented Matrix mode enables the creation of augmented matrices and many augmented matrix functions.
 Below are a list of augmented matrix commands. Some commands also have abbreviations, indicated by 'abbr.', and each command must be prefixed by 'augmentedmatrix' [abbr. am].
 
---create [abbr. -c] <var-name>	                                        creates and builds an augmented matrix with name <var-name>
---build [abbr. -b] <var-name>	                                        re-builds augmented matrix with name <var-name>
---elim [abbr. -e] <var-name> gaussian [abbr. g]/gaussjordan [abbr. gj]	row-reduces augmented matrix at <var-name> with specified algorithm
+--create [abbr. -c] <var-name>                                                                       creates and builds an augmented matrix with name <var-name>
+--build [abbr. -b] <var-name>                                                                        re-builds augmented matrix with name <var-name>
+--elim [abbr. -e] <var-name> gaussian [abbr. g]/gaussjordan [abbr. gj] [optional] store [abbr. s]    row-reduces augmented matrix at <var-name> with specified algorithm
 """
 am_arg_help = f"Command not found. Type 'silas am --help [abbr. -h]' for a list of augmented matrix commands.\n"
 
