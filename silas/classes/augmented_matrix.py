@@ -1,4 +1,4 @@
-"""import numpy as np
+import numpy as np
 import sys
 from .. import helper as hp
 from .. import strings
@@ -7,7 +7,7 @@ import numpy as np
 import sys
 import helper as hp
 import strings
-
+"""
 
 
 class AugmentedMatrix:
@@ -113,13 +113,13 @@ class AugmentedMatrix:
 			self.coefficients = np.array([float(element) for element in var_input[3 : 3 + cf_size]]).reshape((rows, cf_columns))
 			self.constants = np.array([float(element) for element in var_input[3 + cf_size : ]]).reshape((rows, const_columns))
 		else:
-			if rows == -1:
+			if rows == -1 or not isinstance(rows, int):
 				rows = hp.try_input_for_type(strings.row_query, strings.row_error, int, lambda x : x > 0)
 
-			if cf_columns == -1:
+			if cf_columns == -1 or not not isinstance(cf_columns, int):
 				cf_columns = hp.try_input_for_type(strings.cf_col_query, strings.col_error, int, lambda x : x > 0)
 
-			if const_columns == -1:
+			if const_columns == -1 or not not isinstance(const_columns, int):
 				const_columns = hp.try_input_for_type(strings.const_col_query, strings.col_error, int, lambda x : x > 0)
 
 			self.constants, self.coefficients = np.zeros((rows, const_columns)), np.zeros((rows, cf_columns))

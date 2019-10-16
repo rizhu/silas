@@ -20,10 +20,11 @@ Below are a list of general commands. Some commands also have abbreviations, ind
 
 augmentedmatrix [abbr. am]      augmented matrix sub-commands. Use 'silas augmentedmatrix --help' for more info
 
---clear                         removes all stored variables
---help [abbr. -h]               opens this help menu
---listvars [abbr. -ls]          lists all stored variables and their type
---show [abbr. -s] <var-name>    prints the variable stored at <var-name>
+--delete [abbr. -d] <var-name>    deletes variable at <var-name> if it exists         
+--clear                           removes all stored variables
+--help [abbr. -h]                 opens this help menu
+--listvars [abbr. -ls]            lists all stored variables and their type
+--show [abbr. -s] <var-name>      prints the variable stored at <var-name>
 """
 general_arg_help = f"Command not found. Type 'silas --help [abbr. -h]' for a list of general commands."
 am_help = f"""

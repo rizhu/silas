@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""
+
 import argparse
 from . import var_list
 from . import strings
@@ -9,12 +9,18 @@ import argparse
 import var_list
 import strings
 from classes import augmented_matrix as am
-
+"""
 
 def main_defaults(args):
+	"""
+	Argument parsing for main ArgumentParser
+	"""
 	if args.help:
 		print(strings.general_help)
 	elif args.listvars:
+		var_list.print_all()
+	elif args.delete:
+		var_list.del_var(args.delete[0])
 		var_list.print_all()
 	elif args.clear:
 		var_list.clear()
@@ -26,6 +32,9 @@ def main_defaults(args):
 		del temp_var
 
 def am_defaults(args):
+	"""
+	Argument parsing for augmented matrix subparser
+	"""
 	if args.help:
 		print(strings.am_help)
 	elif args.create:
@@ -59,6 +68,7 @@ def main():
 	main_parser = argparse.ArgumentParser(prog = 'silas', usage = strings.general_arg_help, add_help = False)
 	main_parser.add_argument("-h", "--help", action ='store_true')
 	main_parser.add_argument("-ls", "--listvars", help = strings.general_arg_help, action ='store_true')
+	main_parser.add_argument("-d", "--delete", nargs = 1, metavar = "<var-name>", type = str)
 	main_parser.add_argument("--clear", help = strings.general_arg_help, action ='store_true')
 	main_parser.add_argument("-s", "--show", metavar = "<var-name>", type = str)
 	subparsers = main_parser.add_subparsers()
@@ -70,7 +80,7 @@ def main():
 
 	am_parser = subparsers.add_parser('augmentedmatrix', aliases = ["am"], usage = strings.am_arg_help, add_help = False)
 	am_parser.add_argument("-h", "--help", action ='store_true')
-	am_parser.add_argument("-c", "--create", metavar = "<var-name>", type = str)
+	am_parser.add_argument("-c", "--create", nargs = '+', metavar = "<var-name>", type = str)
 	am_parser.add_argument("-b", "--build", metavar = "<var-name>", type = str)
 	am_parser.add_argument("-e", "--elim", nargs = '+', type = str)
 	am_parser.set_defaults(func = am_defaults)

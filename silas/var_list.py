@@ -1,11 +1,11 @@
-"""import os
+import os
 from . import strings
 from .classes import augmented_matrix as am
 """
 import os
 import strings
 from classes import augmented_matrix as am
-
+"""
 
 
 with open("var_list.silas", "a+") as var_list:
@@ -18,6 +18,23 @@ def clear():
 	with open("var_list.silas", "r+") as var_list:
 		var_list.truncate(0)
 		var_list.close
+
+def del_var(var_name: str):
+	"""
+	Deletes a variable
+
+	var_name: name of variable to delete
+	"""
+	with open("var_list.silas", "r") as var_list:
+		lines = var_list.readlines()
+		var_list.close()
+	with open("var_list.silas", "w") as var_list:
+		for line in lines:
+			if not var_name in line.strip("\n"):
+				var_list.write(line)
+		var_list.close()
+		del lines
+		print(f"Deleted {var_name} if it existed\n")
 
 
 def store_var(var_name: str, var):
