@@ -13,6 +13,8 @@ about_silas = f"Silas is developed by Imran Khaliq, Noor Mahini, and Richard Hu 
 ###############################
 
 general_help = f"""
+Silas version 0.1.4.3.
+
 Welome to Silas, the Somewhat Interactive Linear Algebra Software!
 
 Silas is capable of storing and operating on variables such as matrices and augmented matrices. Silas runs on the command line and is designed to be quickly accessible.
@@ -31,8 +33,9 @@ am_help = f"""
 Augmented Matrix mode enables the creation of augmented matrices and many augmented matrix functions.
 Below are a list of augmented matrix commands. Some commands also have abbreviations, indicated by 'abbr.', and each command must be prefixed by 'augmentedmatrix' [abbr. am].
 
---create [abbr. -c] <var-name>                                                                       creates and builds an augmented matrix with name <var-name>
+--create [abbr. -c] <var-name> [optional] f/fast                                                     creates and builds an augmented matrix with name <var-name>
 --build [abbr. -b] <var-name>                                                                        re-builds augmented matrix with name <var-name>
+--swaprows [abbr. -sw] <var-name> <first-row> <second-row> [optional] store [abbr. s]                swaps row number <first-row> with row number <second-row> for <var-name>
 --elim [abbr. -e] <var-name> gaussian [abbr. g]/gaussjordan [abbr. gj] [optional] store [abbr. s]    row-reduces augmented matrix at <var-name> with specified algorithm
 """
 am_arg_help = f"Command not found. Type 'silas am --help [abbr. -h]' for a list of augmented matrix commands.\n"
