@@ -35,7 +35,9 @@ def am_defaults(args):
 	"""
 	Argument parsing for augmented matrix subparser
 	"""
-	if args.help:
+	if args.tutorial:
+		print(strings.am_tutorial)
+	elif args.help:
 		print(strings.am_help)
 	elif args.create:
 		temp_am = am.AugmentedMatrix()
@@ -119,6 +121,7 @@ def main():
 	m_parser.add_argument("-b", "--build", metavar = "<var-name>", type = str, help = "builds a matrix stored at <var_name>")
 
 	am_parser = subparsers.add_parser('augmentedmatrix', aliases = ["am"], usage = strings.am_arg_help, add_help = False)
+	am_parser.add_argument("-t", "--tutorial", action='store_true')
 	am_parser.add_argument("-h", "--help", action ='store_true')
 	am_parser.add_argument("-c", "--create", nargs = '+', metavar = "<var-name>", type = str)
 	am_parser.add_argument("-sw", "--swaprows", nargs = '+', type = str)
