@@ -4,7 +4,7 @@
 #                             #
 ###############################
 
-about_silas = f"Silas is developed by Imran Khaliq, Noor Mahini, and Richard Hu and is licensed under the GNU General Public Licence.\n"
+about_silas = f"Silas is developed by Richard Hu and is licensed under the GNU General Public Licence.\n"
 
 ###############################
 #                             #
@@ -13,7 +13,7 @@ about_silas = f"Silas is developed by Imran Khaliq, Noor Mahini, and Richard Hu 
 ###############################
 
 general_help = f"""
-Silas version 1.0
+Silas version 1.1
 
 Welome to Silas, the Somewhat Interactive Linear Algebra Software!
 
