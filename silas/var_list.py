@@ -7,6 +7,7 @@ import strings
 from classes import augmented_matrix as am
 """
 
+#script_path = os.path.dirname(os.path.realpath(__file__))
 
 with open("var_list.silas", "a+") as var_list:
 	var_list.close()

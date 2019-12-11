@@ -230,10 +230,9 @@ class AugmentedMatrix:
 		store_row:      Row to store sum in
 		human_row_nums: If True, row numbers are processed starting as 1. Otherwise, they are processed as starting at 0.
 		"""
-
 		if human_row_nums:
-			self.coefficients[store_row - 1] = np.add(first_row[0], second_row[0])
-			self.constants[store_row - 1] = np.add(first_row[1], second_row[1])
+			self.coefficients[store_row - 1] = np.add(self.coefficients[first_row - 1], self.coefficients[second_row - 1])
+			self.constants[store_row - 1] = np.add(self.constants[first_row - 1], self.constants[second_row - 1])
 		else:
 			self.coefficients[store_row] = np.add(first_row[0], second_row[0])
 			self.constants[store_row] = np.add(first_row[1], second_row[1])
@@ -242,6 +241,7 @@ class AugmentedMatrix:
 		"""
 		Row-reduces augmented matrix with Gaussian elimination
 		"""
+		print("Starting Matrix:", self, sep = "\n")
 
 		pivot_row = 0
 		for current_column in range(min(self.coefficients.shape[0], self.coefficients.shape[1])):	# Iterates only over square matrix
@@ -282,6 +282,8 @@ class AugmentedMatrix:
 		"""
 		Row-reduces augmented matrix with Guass-Jordan elimination
 		"""
+		print("Starting Matrix:", self, sep = "\n")
+
 		pivot_row = 0
 		for current_column in range(min(self.coefficients.shape[0], self.coefficients.shape[1])):	# Iterates only over square matrix
 

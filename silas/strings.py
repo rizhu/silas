@@ -13,14 +13,14 @@ about_silas = f"Silas is developed by Imran Khaliq, Noor Mahini, and Richard Hu 
 ###############################
 
 general_help = f"""
-Silas version 0.1.4.3.
+Silas version 1.0
 
 Welome to Silas, the Somewhat Interactive Linear Algebra Software!
 
 Silas is capable of storing and operating on variables such as matrices and augmented matrices. Silas runs on the command line and is designed to be quickly accessible.
 Below are a list of general commands. Some commands also have abbreviations, indicated by 'abbr.', and each command must be prefixed by 'silas'.
 
-augmentedmatrix [abbr. am]      augmented matrix sub-commands. Use 'silas augmentedmatrix --help' for more info
+augmentedmatrix [abbr. am]      augmented matrix sub-commands. Use 'silas augmentedmatrix --help' [abbr. 'silas am -h'] for more info
 
 --delete [abbr. -d] <var-name>    deletes variable at <var-name> if it exists         
 --clear                           removes all stored variables
@@ -32,10 +32,13 @@ general_arg_help = f"Command not found. Type 'silas --help [abbr. -h]' for a lis
 am_help = f"""
 Augmented Matrix mode enables the creation of augmented matrices and many augmented matrix functions.
 Below are a list of augmented matrix commands. Some commands also have abbreviations, indicated by 'abbr.', and each command must be prefixed by 'augmentedmatrix' [abbr. am].
+Using 'store' argument will override current variable definition with result of argument.
 
---create [abbr. -c] <var-name> [optional] f/fast                                                     creates and builds an augmented matrix with name <var-name>
---build [abbr. -b] <var-name>                                                                        re-builds augmented matrix with name <var-name>
+--help [abbr. -h]                                                                                    opens this help menu
+--create [abbr. -c] <var-name> [optional] f/fast                                                     creates and builds an augmented matrix with name <var-name>. Can also be used to re-build <var-name>. 'fast' argument shortens prompt
 --swaprows [abbr. -sw] <var-name> <first-row> <second-row> [optional] store [abbr. s]                swaps row number <first-row> with row number <second-row> for <var-name>
+--addrows [abbr. -add] <var-name> <first-row> <second-row> <store-row> [optional] store [abbr. s]    adds <first-row> to <second-row> and stores it at <store-row> for <var-name>
+--multrow [abbr. mul] <var-name> <row> <constant> [optional] store [abbr. s]                         multiplies <row> by <constant> for <var-name>
 --elim [abbr. -e] <var-name> gaussian [abbr. g]/gaussjordan [abbr. gj] [optional] store [abbr. s]    row-reduces augmented matrix at <var-name> with specified algorithm
 """
 am_arg_help = f"Command not found. Type 'silas am --help [abbr. -h]' for a list of augmented matrix commands.\n"
